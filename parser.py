@@ -49,13 +49,16 @@ def track_cd_rec(args, meta):
 					work_dir = work_dir + '/' + item
 		meta['work_dir'] = work_dir
 		args[1] = args[1][3:]
-		track_cd_rec(args, meta)
+		work_dir = track_cd_rec(args, meta)
 	elif args[1][0] == '.':
 		work_split = args
 		work_split[1] = work_split[1][2:]
 		work_dir = track_cd_rec(work_split, meta)
 	else:
-		work_dir = meta['work_dir'] + "/" + args[1]
+		if len(work_dir) == 1:
+			work_dir = meta['work_dir'] + args[1]
+		else:
+			work_dir = meta['work_dir'] + "/" + args[1]
 
 	return work_dir
 

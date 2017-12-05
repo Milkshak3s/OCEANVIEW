@@ -19,3 +19,5 @@ cd ~ & cd /test
 cd ~ && cd /test1
 cd ~ & cd test
 cd ~ && cd test1
+cd ~
+cd ../chris/../../etc/ssh
