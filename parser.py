@@ -96,6 +96,32 @@ def track_cd(args, meta):
 	return None
 
 
+def track_iptables_rec(args):
+	'''
+	track_iptables_rec is a recursive helper function for track_iptables
+
+	PARAMETERS
+	args:   (list) arguments in a bash command
+
+	RETURNS
+	None
+	'''
+	return None
+
+
+def track_iptables(args):
+	'''
+	track_iptables parses iptables commands
+
+	PARAMETERS
+	args:   (list) arguments in a bash command
+
+	RETURNS
+	None
+	'''
+	return None
+
+
 def track_command(args, meta):
 	'''
 	track_command tracks user interaction during the logged session
@@ -115,7 +141,7 @@ def track_command(args, meta):
 	elif args[0] == command_list['ps']:
 		pass
 	elif args[0] == command_list['iptables']:
-		pass
+		track_iptables(args)
 	elif args[0] == command_list['grep']:
 		pass
 	elif args[0] == command_list['alias']:
