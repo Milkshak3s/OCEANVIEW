@@ -1,0 +1,21 @@
+root,pts-9
+/etc/ssh
+
+cd .
+cd ./home
+cd ..
+cd ../
+cd ../..
+cd ../../..
+cd ../services
+cd home
+cd /home
+cd /home/user
+cd ~
+cd ..
+cd ~ & ./python.sh
+cd ~ && ./python.sh
+cd ~ & cd /test
+cd ~ && cd /test1
+cd ~ & cd test
+cd ~ && cd test1
