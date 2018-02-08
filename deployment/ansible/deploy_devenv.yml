@@ -5,3 +5,7 @@
             yum: 
                 name: https://osquery-packages.s3.amazonaws.com/centos7/noarch/osquery-s3-centos7-repo-1-0.0.noarch.rpm 
                 state: present
+
+          - name: Install OSQuery with yum
+                name: osquery
+                state: latest
