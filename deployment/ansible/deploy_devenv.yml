@@ -13,6 +13,9 @@
 
           - name: Install dependencies
             yum:
+                name: git
+                state: latest
+            yum:
                 name: yum-utils
                 state: latest
             yum:
@@ -38,3 +41,8 @@
           - name: Grab docker compose
             shell: curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
             shell: chmod +x /usr/local/bin/docker-compose
+
+          - name: Get kolide
+            git:
+                repo: https://github.com/kolide/kolide-quickstart.git
+                dest: ~/kolide
