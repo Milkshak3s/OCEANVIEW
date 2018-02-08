@@ -7,5 +7,6 @@
                 state: present
 
           - name: Install OSQuery with yum
+            yum:
                 name: osquery
                 state: latest
