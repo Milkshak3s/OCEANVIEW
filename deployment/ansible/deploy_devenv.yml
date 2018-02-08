@@ -23,10 +23,7 @@
                 state: latest
 
           - name: Add docker repo
-            yum_repository:
-                name: docker-ce
-                description: docker community edition latest
-                baseurl: https://download.docker.com/linux/centos/
+            shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
           - name: Install docker
             yum:
