@@ -9,7 +9,7 @@
           - name: Install OSQuery with yum
             yum:
                 name: osquery
-                state: latest
+                state: present
 
           - name: Install dependencies
             yum:
@@ -23,11 +23,12 @@
                 state: latest
 
           - name: Add docker repo
-            yum:
-                name: https://download.docker.com/linux/centos/docker-ce.repo
-                state: present
+            yum_repository:
+                name: docker-ce
+                description: docker community edition latest
+                baseurl: https://download.docker.com/linux/centos/
 
           - name: Install docker
             yum:
                 name: docker-ce
-                state: latest
+                state: present
