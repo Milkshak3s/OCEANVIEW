@@ -1,0 +1,10 @@
+---
+- hosts: development
+  tasks:
+          - name: Download OSQuery repo
+            get_url:
+                    url: https://pkg.osquery.io/deb/osquery_2.11.2_1.linux.amd64.deb
+                    dest: ~/osquery.deb
+
+          - name: Add OSQuery package
+                      
