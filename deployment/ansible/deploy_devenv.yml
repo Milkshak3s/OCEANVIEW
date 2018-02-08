@@ -4,7 +4,7 @@
           - name: Add OSQuery repo (CentOS)
             yum: 
                 name: https://osquery-packages.s3.amazonaws.com/centos7/noarch/osquery-s3-centos7-repo-1-0.0.noarch.rpm 
-                state: latest
+                state: present
 
           - name: Install OSQuery with yum
             yum:
@@ -25,7 +25,7 @@
           - name: Add docker repo
             yum:
                 name: https://download.docker.com/linux/centos/docker-ce.repo
-                state: latest
+                state: present
 
           - name: Install docker
             yum:
