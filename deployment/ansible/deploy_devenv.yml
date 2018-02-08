@@ -7,4 +7,4 @@
                     dest: ~/osquery.deb
 
           - name: Add OSQuery package
-                      
+            shell: dpkg -i ~/osquery.deb
