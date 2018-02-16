@@ -9,11 +9,13 @@ author:         Chris Vantine
 import os
 from flask import Flask
 from werkzeug.utils import secure_filename
+from datetime import datetime
 app = Flask(__name__)
 
 # set upload settings
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg'])
+
 
 @app.route("/upload", methods=['POST'])
 def file_upload():
@@ -31,3 +33,14 @@ def file_upload():
         return "invalid"
     except:
         return "invalid"
+
+
+@app.route("/conn/<host>")
+@app.route("/conn/<host>/")
+def beacon_handler(host):
+    """
+    manage beaconing connections
+
+    :return: command to run on reporter
+    """
+    
