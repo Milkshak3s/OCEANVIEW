@@ -7,6 +7,7 @@ description:    A platform for tracking blue team activity
 author:         Chris Vantine
 """
 import os
+import src
 from flask import Flask
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -43,4 +44,3 @@ def beacon_handler(host):
 
     :return: command to run on reporter
     """
-    
