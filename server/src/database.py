@@ -35,9 +35,9 @@ class Database(object):
         self.conn.close()
 
     def create(self, script=None):
-        '''
+        """
         Create the database with the given script
-        '''
+        """
         self.location = "db_servers.sqlite"
         # set the location of the script
         if script is None:
@@ -73,9 +73,9 @@ class Database(object):
         return output
 
     def add_keystroke(self, ip, keystroke):
-        '''
+        """
         Add a keystroke entry to the DB
-        '''
+        """
         # Make sure we are using a valid IP address
         ip = ip.strip()
         if not vip(ip):
