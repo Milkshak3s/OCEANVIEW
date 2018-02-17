@@ -96,7 +96,7 @@ class Database(object):
         self.cur.execute(qry1, (ip,))
         # Add the keystroke to the database
         self.cur.execute(qry2, (ip, key, value))
-        # Write the changes to teh DB
+        # Write the changes to the DB
         self.conn.commit()
     
     def add_keystroke(self, ip, keystroke):
@@ -115,7 +115,7 @@ class Database(object):
         self.cur.execute(qry1, (ip,))
         # Add the keystroke to the database
         self.cur.execute(qry2, (ip,keystroke))
-        # Write the changes to teh DB
+        # Write the changes to the DB
         self.conn.commit()
     
     def add_file(self, ip, filename):
@@ -134,7 +134,7 @@ class Database(object):
         self.cur.execute(qry1, (ip,))
         # Add the filename to the database
         self.cur.execute(qry2, (ip,filename))
-        # Write the changes to teh DB
+        # Write the changes to the DB
         self.conn.commit()
 
     def GENERIC(self, table, col, val):
