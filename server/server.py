@@ -23,6 +23,16 @@ def start_server(ip, port):
     app.run(host=ip, port=port)
 
 
+def start_server(ip, port):
+    """
+    start the server
+    :param ip: interface to host on
+    :param port: port to host on
+    :return: None
+    """
+    app.run(host=ip, port=port)
+
+
 @app.route("/conn")
 @app.route("/conn/")
 def beacon_handler():
