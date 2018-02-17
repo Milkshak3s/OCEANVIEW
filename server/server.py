@@ -1,14 +1,9 @@
 """
-filename:       server.py
-program:        OCEANVIEW
-
-description:    A platform for tracking blue team activity
-
-author:         Chris Vantine
+A platform for tracking blue team activity
+Author: Chris Vantine
 """
 import os
-import database
-import toolbox
+import src
 from flask import Flask
 from werkzeug.utils import secure_filename
 from datetime import datetime
