@@ -3,7 +3,8 @@ A platform for tracking blue team activity
 Author: Chris Vantine
 """
 import os
-import src
+import database
+import toolbox
 from flask import Flask
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -12,7 +13,6 @@ app = Flask(__name__)
 # set upload settings
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
-
 
 def start_server(ip, port):
     """
@@ -62,6 +62,7 @@ def screenshot_handler(host):
     except:
         return "invalid"
 
+            # update database and return success
 
 @app.route("/key/<host>", methods=['POST'])
 @app.route("/key/<host>/", methods=['POST'])
