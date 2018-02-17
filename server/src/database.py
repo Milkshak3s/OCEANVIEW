@@ -6,6 +6,8 @@ Author: Micah Martin (knif3)
 from toolbox import validate_ip as vip
 from os.path import exists
 import sqlite3
+
+
 class Database(object):
     """
     Database handler object. Abstracts alot of SQLite stuff
