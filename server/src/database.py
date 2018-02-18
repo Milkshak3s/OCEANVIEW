@@ -3,7 +3,7 @@ Database handler object
 Author: Micah Martin (knif3)
 """
 
-from toolbox import validate_ip as vip
+from oceanview.server.src.toolbox import validate_ip as vip
 from os.path import exists
 import sqlite3
 
@@ -21,12 +21,12 @@ class Database(object):
         self.cur = self.conn.cursor()
         # If it doesnt exist, run the script on it
         if not ex:
-            print "Creating DB"
+            print("Creating DB")
             self.create(script)
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()
 
@@ -44,7 +44,7 @@ class Database(object):
         # set the location of the script
         if script is None:
             script = "build_db.sql"
-        
+
         # Read the build script
         fil = open(script)
         build_script = fil.read()
@@ -103,4 +103,3 @@ class Database(object):
             return  {}
         else:
             return results[0]
-
