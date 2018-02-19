@@ -3,7 +3,7 @@ Database handler object
 Author: Micah Martin (knif3)
 """
 
-from oceanview.server.src.toolbox import validate_ip as vip
+from toolbox import validate_ip as vip
 from os.path import exists
 import sqlite3
 
@@ -66,13 +66,40 @@ class Database(object):
         Format the cursor output as json
         """
         output = []
-        cols = [c[0] for c in cursor.description]
-        for i in cursor.fetchall():
-            d = {}
-            for j in range(len(cols)):
-                d[cols[j]] = i[j]
-            output += [d]
-        return output
+        try:
+            # Get all of the columns in the output
+            cols = [c[0] for c in cursor.description]
+            # Get all the data
+            for i in cursor.fetchall():
+                d = {}
+                # Shove it into the json
+                for j in range(len(cols)):
+                    d[cols[j]] = i[j]
+                output += [d]
+            # return the output
+            return output
+        except:
+            # Just fail because there is probably not a result
+            return {}
+
+    def add_data(self, ip, key, value):
+        """
+        Add a random data entry to the DB
+        """
+        # Make sure we are using a valid IP address
+        ip = ip.strip()
+        if not vip(ip):
+            raise Exception("Not a valid IP")
+        # Create a query string that will update the last check in time for an ip
+        qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
+        # Create a string that will add the keystroke to the DB
+        qry2 = "INSERT INTO data('ip','name', 'data') VALUES(?,?,?);"
+        # Update the last callback time
+        self.cur.execute(qry1, (ip,))
+        # Add the keystroke to the database
+        self.cur.execute(qry2, (ip, key, value))
+        # Write the changes to the DB
+        self.conn.commit()
 
     def add_keystroke(self, ip, keystroke):
         """
@@ -90,16 +117,77 @@ class Database(object):
         self.cur.execute(qry1, (ip,))
         # Add the keystroke to the database
         self.cur.execute(qry2, (ip,keystroke))
-        # Write the changes to teh DB
+        # Write the changes to the DB
         self.conn.commit()
+
+    def add_file(self, ip, filename):
+        """
+        Add a file entry to the DB
+        """
+        # Make sure we are using a valid IP address
+        ip = ip.strip()
+        if not vip(ip):
+            raise Exception("Not a valid IP")
+        # Create a query string that will update the last check in time for an ip
+        qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
+        # Create a string that will add the filename to the DB
+        qry2 = "INSERT INTO files('ip','filename') VALUES(?,?);"
+        # Update the last callback time
+        self.cur.execute(qry1, (ip,))
+        # Add the filename to the database
+        self.cur.execute(qry2, (ip,filename))
+        # Write the changes to the DB
+        self.conn.commit()
+
+    def get_keystrokes(self, ip):
+        """
+        Get screenshots from a specific host
+        :param ip: host to retrieve from
+        :return: tables of keystroke lines
+        """
+        ip = ip.strip()
+
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("keystrokes", "ip")
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        else:
+            return results
+
+    def get_files(self, ip):
+        """
+        Get screenshots from a specific host
+        :param ip: host to retrieve from
+        :return: tables of paths to screenshots
+        """
+        ip = ip.strip()
+
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        else:
+            return results
 
     def GENERIC(self, table, col, val):
         """
         Use this function as a template for new query commands
         """
+        # construct and execute query
         qry = "SELECT * FROM {} WHERE {} = ?;".format(table, col)
-        results = self.handle_query(qry, val)
+        self.cur.execute(qry, (val,))
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
         if not results:
-            return  {}
+            return {}
         else:
             return results[0]
