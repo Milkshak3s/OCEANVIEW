@@ -3,10 +3,10 @@ Main program for handling OCEANVIEW backend
 Author: Chris Vantine
 """
 import sys
-import time
 import front
 import back
 import data
+import database.utilities as dbutil
 
 """
 To change the front-end, simply change the import statement.
@@ -26,33 +26,21 @@ def main():
 
     if 'maketestdb' in sys.argv:
         did_something = True
-        # to do - make this a function call to the database
         database = data.Database("db.sqlite", "database/build_db.sql")
         print("Adding Test Data to Database...")
         print("Adding keystrokes...")
-        strokes = [
-            "Never",
-            "Gonna",
-            "Give",
-            "You",
-            "Up",
-            "This line is very very long, so that the web dev person can make sure\
-            that stupid long lines don't break the frontend UI.",
-            "rm -rf /*",
-            "There is no need to be concerned"
-        ]
-        for stringy in strokes:
-            database.add_keystroke(addr='127.127.127.127', keystroke=stringy)
-            time.sleep(1)
+        dbutil.add_test_data(database)
         print("Keystrokes added to test IP 127.127.127.127")
         print("Test files/screenshots not yet implemented.")
 
     if 'front' in sys.argv or 'both' in sys.argv:
         did_something = True
-        front.init(8000)
+        frontend = front.init()
+        frontend.run('127.0.0.1', 8000)
     if 'back' in sys.argv or 'both' in sys.argv:
         did_something = True
-        back.init()
+        backend = back.init()
+        backend.run('127.0.0.1', 80)
 
     if did_something is False:
         print("Usage: python oceanview.py [command]")

@@ -8,13 +8,11 @@ import data as databaseobj
 
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
-def init(port):
-    """ Add the Frontend views to the app. """
+def init():
+    """ run the frontend app """
 
     database = databaseobj.Database("db.sqlite", "database/build_db.sql")
     app = Flask(__name__)
-    app.run('127.0.0.1', port)
-
 
     @app.route('/')
     def index():
@@ -70,6 +68,8 @@ def init(port):
     def make_coffee():
         """Return code 418, as this is a teapot."""
         return "<h1>418</h1>", 418
+
+    return app
 
 def validate_ip(_addr):
     """Tell if an IP is a valid IP."""
