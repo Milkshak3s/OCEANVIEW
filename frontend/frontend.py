@@ -1,10 +1,14 @@
 """
-Make OCEANVIEW's backend easy to use.
+show what's in OCEANVIEW's database.
 author: Ethan Witherington.
 """
 
 from flask import Flask, render_template, request, abort, jsonify
 APP = Flask(__name__)
+
+def kickit(addr, port):
+    """ Kick it. """
+    APP.run(host=addr, port=port)
 
 @APP.route('/')
 def index():
@@ -30,6 +34,7 @@ def data():
         return all (type)s that have a timestamp later than (since)
         in the form of an array of strings.
         Strings are plaintext for text and IPs, and filenames for shots.
+        If there are a lot, only return 100.
     """
     #Make sure it's JSON
     if not request.is_json:
@@ -62,6 +67,7 @@ def validate_ip(_addr):
 
 def get_text(_since):
     """Get text later than since from the db"""
+
     return ['never', 'gonna', 'give', 'you', 'up']
 
 def get_shots(_since):
