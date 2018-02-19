@@ -15,6 +15,8 @@ def init():
 
     database = databaseobj.Database("db.sqlite", "database/build_db.sql")
     app = Flask(__name__)
+    app.config['UPLOAD_FOLDER'] = 'uploads/'
+    app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
     def allowed_file(filename):
         """
