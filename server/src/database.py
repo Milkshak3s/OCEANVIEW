@@ -246,9 +246,9 @@ class Database(object):
         # Write the changes to the DB
         self.conn.commit()
 
-    def get_file_recent(self, ip):
+    def get_file(self, ip):
         """
-        Get the most recent screenshot from a specific host
+        Get screenshots from a specific host
         :param ip: host to retrieve from
         :return: path to screenshot
         """
@@ -268,8 +268,11 @@ class Database(object):
         """
         Use this function as a template for new query commands
         """
+        # construct and execute query
         qry = "SELECT * FROM {} WHERE {} = ?;".format(table, col)
         results = self.handle_query(qry, val)
+
+        # return results if query succeeds
         if not results:
             return  {}
         else:
