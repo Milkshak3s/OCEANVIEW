@@ -8,6 +8,7 @@
         <script type="text/javascript">
             var addr = "{{ addr }}";
         </script>
+        <script src="/static/overview.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="titleblock altitude1">
@@ -15,19 +16,16 @@
             <p>{{ addr }}</p>
         </div>
         <div class="twocol">
-            <div class="texts">
+            <div id="texts">
                 <p class="altitude1">Texts</p>
-                <div class="text altitude1">
-                    This is not a real IP.
-                </div>
-                <div class="text altitude1">
-                    rm -rf /*
+                <div class="text altitude1" id='LoadingText'>
+                    Loading...
                 </div>
             </div>
-            <div class="shots">
+            <div id="shots">
                 <p class="altitude1">Shots</p>
-                <div class="shot altitude1">
-                    <p>This should be an image.</p>
+                <div class="shot altitude1" id='LoadingShot'>
+                    Loading...
                 </div>
             </div>
         </div>
