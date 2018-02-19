@@ -27,7 +27,7 @@ function request(type, since, addr, callback){
     };
     xhttp.open("POST", "/data", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.send(JSON.stringify({type: type, since: since}));
+    xhttp.send(JSON.stringify({type: type, since: since, addr: addr}));
 }
 
 window.onload = function() {

