@@ -6,14 +6,15 @@ CREATE TABLE `data` (
 	`ip`    TEXT,
 	`name`  TEXT,
 	`data`	TEXT,
-	PRIMARY KEY(`ip`, `name`)
+  `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 
 -- These are the IPs that we know about with last checkin time
 CREATE TABLE `timestamps` (
 	`ip`   TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        PRIMARY KEY(`ip`)
+        PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 
 
@@ -30,6 +31,6 @@ CREATE TABLE `files` (
 	`ip`        TEXT,
         `filename`  TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        PRIMARY KEY(`ip`, `filename`)
+        PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 

@@ -14,7 +14,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
-# TODO: Move to oceanview.py
 # spin up new database
 db = database.Database("db.sqlite", "server/src/build_db.sql")
 
@@ -27,7 +26,7 @@ def start_server(ip, port):
     :return: None
     """
     # TODO: Remove this test code
-    print(db.get_keystrokes('10.0.0.2'))
+    print(db.get_keystrokes('10.0.0.1')[0][1])
 
     app.run(host=ip, port=port)
 
