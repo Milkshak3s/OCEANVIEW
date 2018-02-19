@@ -3,14 +3,22 @@ A platform for tracking blue team activity
 Author: Chris Vantine
 """
 import os
-from flask import request
+from flask import Flask, request
 from werkzeug.utils import secure_filename
+import data as databaseobj
 
 # route functions flagged as unused, disabling warning for this function.
 # Also disabling warning about catch-all excepts
 # pylint: disable=W0612, W0702
-def init(app, database):
-    """ Initialize backend views """
+def init():
+    """ Initialize backend app """
+
+
+    database = databaseobj.Database("db.sqlite", "database/build_db.sql")
+    app = Flask(__name__)
+
+    app.run('127.0.0.1', 80)
+
     def allowed_file(filename):
         """
         checks if file is allowed
