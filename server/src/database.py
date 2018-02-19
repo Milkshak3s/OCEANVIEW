@@ -109,8 +109,9 @@ class Database(object):
 Database handler object
 Author: Micah Martin (knif3)
 """
-
-from toolbox import validate_ip as vip
+import os, sys
+sys.path.insert(0, os.path.abspath("../../.."))
+from server.src.toolbox import validate_ip as vip
 from os.path import exists
 import sqlite3
 
