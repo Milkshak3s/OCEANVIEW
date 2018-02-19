@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ addr }}</title>
+        <link rel="stylesheet" href="/static/shadow.css">
+        <link rel="stylesheet" href="/static/overview.css">
+        <script type="text/javascript">
+            var addr = "{{ addr }}";
+        </script>
+        <script src="/static/overview.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="titleblock altitude1">
+            <h1>OCEANVIEW</h1>
+            <p>{{ addr }}</p>
+        </div>
+        <div class="twocol">
+            <div id="texts">
+                <p class="altitude1">Texts</p>
+                <div class="text altitude1" id='LoadingText'>
+                    Loading...
+                </div>
+            </div>
+            <div id="shots">
+                <p class="altitude1">Shots</p>
+                <div class="shot altitude1" id='LoadingShot'>
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
