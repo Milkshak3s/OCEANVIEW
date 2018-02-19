@@ -1,6 +1,6 @@
 # OCEANVIEW
 Blue team tracking for the red team
-<br \>
+<br />
 ## Usage
  Install dependencies (Ubuntu)
 ```
