@@ -7,15 +7,15 @@ import src.database as database
 from flask import Flask
 from flask import request
 from werkzeug.utils import secure_filename
-from datetime import datetime
-app = Flask(__name__)
 
-# set upload settings
+# set basic flask settings
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
 # spin up new database
 db = database.Database("db.sqlite", "server/src/build_db.sql")
+
 
 def start_server(ip, port):
     """
@@ -24,6 +24,9 @@ def start_server(ip, port):
     :param port: port to host on
     :return: None
     """
+    # TODO: Remove this test code
+    print(db.get_keystrokes('10.0.0.1'))
+
     app.run(host=ip, port=port)
 
 

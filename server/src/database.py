@@ -148,8 +148,9 @@ class Database(object):
         ip = ip.strip()
 
         # construct and execute query
-        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
-        results = self.handle_query(qry, ip)
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("keystrokes", "ip")
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
 
         # return results if query succeeds
         if not results:
@@ -167,7 +168,8 @@ class Database(object):
 
         # construct and execute query
         qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
-        results = self.handle_query(qry, ip)
+        self.cur.execute(qry, (ip,))
+        results = self.cur.fetchall()
 
         # return results if query succeeds
         if not results:
@@ -181,10 +183,11 @@ class Database(object):
         """
         # construct and execute query
         qry = "SELECT * FROM {} WHERE {} = ?;".format(table, col)
-        results = self.handle_query(qry, val)
+        self.cur.execute(qry, (val,))
+        results = self.cur.fetchall()
 
         # return results if query succeeds
         if not results:
-            return  {}
+            return {}
         else:
             return results[0]
