@@ -3,14 +3,23 @@ Main program for handling OCEANVIEW backend
 Author: Chris Vantine
 """
 import sys
-import front
+import front as front
 import back
 import data
 import database.utilities as dbutil
 
 """
-To change the front-end, simply change the import statement.
-As long as the new front-end has an init function, all should work.
+    To Change the Font-end:
+        Make sure the new front end has an 'init' function that returns a flask app.
+        change the above import line from
+
+            import front as front
+
+        to
+
+            import newfront as front
+
+        where newfront is whatever the new frontend is called.
 """
 
 def main():
