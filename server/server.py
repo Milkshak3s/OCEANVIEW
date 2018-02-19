@@ -26,7 +26,7 @@ def start_server(ip, port):
     :return: None
     """
     # TODO: Remove this test code
-    print(db.get_keystrokes('10.0.0.1')[0][1])
+    print(db.get_keystrokes('10.0.0.2'))
 
     app.run(host=ip, port=port)
 
