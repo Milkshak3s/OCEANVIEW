@@ -1,5 +1,6 @@
 *.swp
 *.pyc
+*.sqlite
 .idea/
 test*
 venv/
