@@ -147,4 +147,3 @@ class Database(object):
             return  {}
         else:
             return results[0]
-
