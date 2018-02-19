@@ -24,10 +24,10 @@ class Database(object):
         if not ex:
             print("Creating DB")
             self.create(script)
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()
 
@@ -45,7 +45,7 @@ class Database(object):
         # set the location of the script
         if script is None:
             script = "build_db.sql"
-        
+
         # Read the build script
         fil = open(script)
         build_script = fil.read()
@@ -101,7 +101,7 @@ class Database(object):
         self.cur.execute(qry2, (ip, key, value))
         # Write the changes to the DB
         self.conn.commit()
-    
+
     def add_keystroke(self, ip, keystroke):
         """
         Add a keystroke entry to the DB
@@ -120,7 +120,7 @@ class Database(object):
         self.cur.execute(qry2, (ip,keystroke))
         # Write the changes to the DB
         self.conn.commit()
-    
+
     def add_file(self, ip, filename):
         """
         Add a file entry to the DB
