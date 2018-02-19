@@ -19,7 +19,7 @@ class Database(object):
         self.cur = self.conn.cursor()
         # If it doesnt exist, run the script on it
         if not ex:
-            print "Creating DB"
+            print("Creating DB")
             self.create(script)
     
     def __enter__(self):
