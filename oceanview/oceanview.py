@@ -4,49 +4,57 @@ Author: Chris Vantine
 """
 import sys
 import time
-from flask import Flask
 import front
 import back
 import data
+
+"""
+To change the front-end, simply change the import statement.
+As long as the new front-end has an init function, all should work.
+"""
 
 def main():
     """
     main function for the program
     :return: None
     """
-    database = data.Database("db.sqlite", "database/build_db.sql")
-    if 'front' in sys.argv or 'both' in sys.argv or 'back' in sys.argv:
-        app = Flask(__name__)
-        app.config['UPLOAD_FOLDER'] = 'uploads/'
-        app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
-        if 'front' in sys.argv or 'both' in sys.argv:
-            front.init(app, database)
-        if 'back' in sys.argv or 'both' in sys.argv:
-            back.init(app, database)
-        app.run(host='127.0.0.1', port=80)
-    elif 'maketestdb' in sys.argv or 'cleardb' in sys.argv:
-        if 'maketestdb' in sys.argv:
-            print("Adding Test Data to Database...")
-            print("Adding keystrokes...")
-            strokes = [
-                "Never",
-                "Gonna",
-                "Give",
-                "You",
-                "Up",
-                "This line is very very long, so that the web dev person can make sure\
-                that stupid long lines don't break the frontend UI.",
-                "rm -rf /*",
-                "There is no need to be concerned"
-            ]
-            for stringy in strokes:
-                database.add_keystroke(addr='127.127.127.127', keystroke=stringy)
-                time.sleep(1)
-            print("Keystrokes added to test IP 127.127.127.127")
-            print("Test files/screenshots not yet implemented.")
-        else:
-            print("Database Clearing not yet implemented.")
-    else:
+    # Handle order: Cleardb, Testdb, front/back/both, help
+    did_something = False
+    if 'cleardb' in sys.argv:
+        did_something = True
+        print("Database Clearing not yet implemented.")
+
+    if 'maketestdb' in sys.argv:
+        did_something = True
+        # to do - make this a function call to the database
+        database = data.Database("db.sqlite", "database/build_db.sql")
+        print("Adding Test Data to Database...")
+        print("Adding keystrokes...")
+        strokes = [
+            "Never",
+            "Gonna",
+            "Give",
+            "You",
+            "Up",
+            "This line is very very long, so that the web dev person can make sure\
+            that stupid long lines don't break the frontend UI.",
+            "rm -rf /*",
+            "There is no need to be concerned"
+        ]
+        for stringy in strokes:
+            database.add_keystroke(addr='127.127.127.127', keystroke=stringy)
+            time.sleep(1)
+        print("Keystrokes added to test IP 127.127.127.127")
+        print("Test files/screenshots not yet implemented.")
+
+    if 'front' in sys.argv or 'both' in sys.argv:
+        did_something = True
+        front.init(8000)
+    if 'back' in sys.argv or 'both' in sys.argv:
+        did_something = True
+        back.init()
+
+    if did_something is False:
         print("Usage: python oceanview.py [command]")
         print("COMMANDS:")
         print("     front - start the frontend")

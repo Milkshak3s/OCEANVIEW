@@ -3,12 +3,19 @@ show what's in OCEANVIEW's database.
 author: Ethan Witherington.
 """
 
-from flask import render_template, request, abort, jsonify
+from flask import Flask, render_template, request, abort, jsonify
+import data as databaseobj
 
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
-def init(app, database):
+def init(port):
     """ Add the Frontend views to the app. """
+
+    database = databaseobj.Database("db.sqlite", "database/build_db.sql")
+    app = Flask(__name__)
+    app.run('127.0.0.1', port)
+
+
     @app.route('/')
     def index():
         """Show my pretty index.html file"""
