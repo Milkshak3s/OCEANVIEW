@@ -2,6 +2,8 @@
 Main program for handling OCEANVIEW backend
 Author: Chris Vantine
 """
+import os, sys
+sys.path.insert(0, os.path.abspath(".."))
 import server.server as backend
 
 
