@@ -13,11 +13,8 @@ import data as databaseobj
 def init():
     """ Initialize backend app """
 
-
     database = databaseobj.Database("db.sqlite", "database/build_db.sql")
     app = Flask(__name__)
-
-    app.run('127.0.0.1', 80)
 
     def allowed_file(filename):
         """
@@ -76,3 +73,5 @@ def init():
             return "success"
         except:
             return "failed"
+
+    return app
