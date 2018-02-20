@@ -25,18 +25,22 @@ body{
     margin: 2em;
     text-align: center;
 }
-.status p{
+.status div{
     background-color: white;
     display: inline-block;
     padding: 1em;
     font-family: sans-serif;
     margin: 0;
 }
-.status p a{
+.status p{
+    display: inline;
+}
+.status a{
     color: white;
     background-color: Blue;
     padding: 0.5em;
     text-decoration: none;
+    margin: 0 10px;
 }
 .twocol{
     display:  flex;
