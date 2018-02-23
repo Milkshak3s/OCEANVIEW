@@ -11,9 +11,18 @@
         <script src="/static/overview.js" charset="utf-8"></script>
     </head>
     <body>
-        <div class="titleblock altitude1">
-            <h1>OCEANVIEW</h1>
-            <p>{{ addr }}</p>
+        <div class="titleblock">
+            <h1 class="altitude1">O C E A N V I E W</h1>
+        </div>
+        <div class="status">
+            <div class="altitude1">
+                <p>
+                    Updating in X seconds.
+                </p>
+                <a href="#" class="altitude1 hoverlift hoverlift3">
+                    Update Now.
+                </a>
+            </div>
         </div>
         <div class="twocol">
             <div id="texts">
@@ -25,7 +34,7 @@
             <div id="shots">
                 <p class="altitude1">Shots</p>
                 <div class="shot altitude1" id='LoadingShot'>
-                    Loading...
+                    <img src="/static/wave.jpg" alt="Wave" width=600>
                 </div>
             </div>
         </div>
