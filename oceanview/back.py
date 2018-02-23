@@ -72,6 +72,8 @@ def init():
         except:
             return "failed"
 
+    return app
+
 
 def allowed_file(filename):
     """
