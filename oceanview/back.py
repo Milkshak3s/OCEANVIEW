@@ -19,13 +19,6 @@ def init():
     app.config['UPLOAD_FOLDER'] = 'uploads/'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
-    def allowed_file(filename):
-        """
-        checks if file is allowed
-        """
-        return '.' in filename and \
-               filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
-
     @app.route("/conn")
     @app.route("/conn/")
     def beacon_handler():
@@ -78,3 +71,11 @@ def init():
             print("3")
         except:
             return "failed"
+
+
+def allowed_file(filename):
+    """
+    checks if file is allowed
+    """
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
