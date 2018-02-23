@@ -16,7 +16,7 @@ def init():
 
     database = databaseobj.Database("db.sqlite", "database/build_db.sql")
     app = Flask(__name__)
-    app.config['UPLOAD_FOLDER'] = 'uploads/'
+    app.config['UPLOAD_FOLDER'] = 'static/'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
 
     @app.route("/conn")
@@ -46,7 +46,7 @@ def init():
         # attempt to save file to disk
         try:
             file = request.files['file']
-            if file and allowed_file(file.filename):
+            if allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
