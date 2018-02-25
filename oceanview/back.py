@@ -37,7 +37,7 @@ def init():
         :return:  "invalid" if failed, "success" if successful
         """
         # set upload folder to hostname
-        app.config['UPLOAD_FOLDER'] = "static" + host
+        app.config['UPLOAD_FOLDER'] = "static/" + host
         try:
             os.stat(app.config['UPLOAD_FOLDER'])
         except:
