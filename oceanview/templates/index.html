@@ -12,7 +12,13 @@
         </div>
         <div class="targets">
             {% for item in hosts %}
-            <li><a href="overview/{{ item }}">{{ item }}</a></li>
+            <li>
+                <a class="target altitude1 hoverlift hoverlift3" href="overview/{{ item }}">
+                    <span>
+                        {{ item }}
+                    </span>
+                </a>
+            </li>
             {% endfor %}
             <a class="target altitude1 hoverlift hoverlift3" href="overview/127.127.127.127">
                 <span>Test: 127.127.127.127</span>
