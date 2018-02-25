@@ -51,13 +51,13 @@ def main():
     if 'front' in sys.argv or 'both' in sys.argv:
         did_something = True
         frontend = front.init()
-        frontend.run('127.0.0.1', 8000)
+        frontend.run('0.0.0.0', 8000)
 
     # The user wants the back end launched.
     if 'back' in sys.argv or 'both' in sys.argv:
         did_something = True
         backend = back.init()
-        backend.run('127.0.0.1', 80)
+        backend.run('0.0.0.0', 80)
 
     # did_something is False, nothing was done, show the usage info.
     if did_something is False:
