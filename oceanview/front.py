@@ -103,6 +103,13 @@ def validate_ip(_addr):
 def get_text(_since, addr, database):
     """Get text later than since from the db"""
     raw = database.get_keystrokes(addr)
+    """
+    database.get_keystrokes returns:
+    [
+        (ip, keystroke, timestamp),
+        (ip, keystroke, timestamp)
+    ]
+    """
     parsed = []
     for entry in raw:
         parsed.append(entry[1])
@@ -111,6 +118,14 @@ def get_text(_since, addr, database):
 
 def get_shots(_since, addr, database):
     """Get screenshots later than since"""
+    files = database.get_files(addr)
+    """
+    database.get_files returns:
+    [
+        (ip, filepath, timestamp),
+        (ip, filepath, timestamp)
+    ]
+    """
     return None
 
 
