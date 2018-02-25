@@ -5,6 +5,7 @@ author: Ethan Witherington.
 
 from flask import Flask, render_template, request, abort, jsonify
 import data as databaseobj
+import html
 
 
 # route functions flagged as unused, disabling warning for this function.
@@ -112,7 +113,7 @@ def get_text(_since, addr, database):
     """
     parsed = []
     for entry in raw:
-        parsed.append(entry[1])
+        parsed.append(html.escape(entry[1]))
     return parsed
 
 
