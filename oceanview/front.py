@@ -17,8 +17,12 @@ def init():
 
     @app.route('/')
     def index():
-        """Show my pretty index.html file"""
-        return render_template('index.html')
+        """Display returning hosts"""
+        # grab unique hosts from database
+        hosts = database.get_unique_hosts()
+
+        # render template
+        return render_template('index.html', hosts=hosts)
 
     @app.route('/overview/<string:addr>')
     def machine(addr='192.168.420.69'):
