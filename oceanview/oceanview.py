@@ -8,8 +8,8 @@ import back
 import data
 import database.utilities as dbutil
 
-# interface to listen on (global)
-interface = "0.0.0.0"
+# INTERFACE to listen on (global)
+INTERFACE = "0.0.0.0"
 
 def main():
     """
@@ -40,13 +40,13 @@ def main():
     if 'front' in sys.argv or 'both' in sys.argv:
         did_something = True
         frontend = front.init()
-        frontend.run(interface, 8000)
+        frontend.run(INTERFACE, 8000)
 
     # The user wants the back end launched.
     if 'back' in sys.argv or 'both' in sys.argv:
         did_something = True
         backend = back.init()
-        backend.run('interface', 80)
+        backend.run('INTERFACE', 80)
 
     # did_something is False, nothing was done, show the usage info.
     if did_something is False:
