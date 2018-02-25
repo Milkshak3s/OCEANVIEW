@@ -23,9 +23,12 @@ def init():
     @app.route('/overview/<string:addr>')
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
-        # Firstly, validate the IP.
+        # Grab screencapture filepath from database
+        screen_path = databaseobj.get_files(addr)
+
+        # Validate the IP.
         if validate_ip(addr):
-            return render_template('overview.html', addr=addr)
+            return render_template('overview.html', addr=addr, screen_path=screen_path)
         return "Invalid IP. You're BAD and you should feel BAD."
 
     @app.route('/data', methods=['POST'])
