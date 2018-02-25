@@ -11,11 +11,9 @@
             <h1>O C E A N V I E W</h1>
         </div>
         <div class="targets">
-            <!-- Use Jinja for loop to create target selection shit.
-            {% for item in navigation %}
-            <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+            {% for item in hosts %}
+            <li><a href="overview/{{ item }}">{{ item }}</a></li>
             {% endfor %}
-            -->
             <a class="target altitude1 hoverlift hoverlift3" href="overview/127.127.127.127">
                 <span>Test: 127.127.127.127</span>
             </a>
