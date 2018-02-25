@@ -6,6 +6,7 @@ from os.path import exists
 import sqlite3
 from database.utilities import validate_ip as vip
 
+
 # Also disabling warning about catch-all excepts
 # pylint: disable=W0702
 class Database(object):
@@ -119,7 +120,7 @@ class Database(object):
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the keystroke to the database
-        self.cur.execute(qry2, (addr, keystroke))
+        self.cur.execute(qry2, (addr, keystroke.decode('utf-8')))
         # Write the changes to the DB
         self.conn.commit()
 
@@ -138,7 +139,7 @@ class Database(object):
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the filename to the database
-        self.cur.execute(qry2, (addr, filename))
+        self.cur.execute(qry2, (addr, "/" + filename))
         # Write the changes to the DB
         self.conn.commit()
 
@@ -177,6 +178,21 @@ class Database(object):
         if not results:
             return {}
         return results
+
+    def get_unique_hosts(self):
+        """Get a list of unique hosts in the database"""
+        # construct and execute query
+        qry = "SELECT DISTINCT {} FROM {};".format("ip", "timestamps")
+        self.cur.execute(qry)
+        results = self.cur.fetchall()
+
+        # fix results into proper array
+        new_results = []
+        for item in results:
+            new_results += [item[0]]
+
+        # return results
+        return new_results
 
     def generic(self, table, col, val):
         """

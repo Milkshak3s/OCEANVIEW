@@ -6,6 +6,7 @@ author: Ethan Witherington.
 from flask import Flask, render_template, request, abort, jsonify
 import data as databaseobj
 
+
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
 def init():
@@ -16,15 +17,25 @@ def init():
 
     @app.route('/')
     def index():
-        """Show my pretty index.html file"""
-        return render_template('index.html')
+        """Display returning hosts"""
+        # grab unique hosts from database
+        hosts = database.get_unique_hosts()
+
+        # render template
+        return render_template('index.html', hosts=hosts)
 
     @app.route('/overview/<string:addr>')
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
-        # Firstly, validate the IP.
+        # Grab screencapture filepath from database
+        try:
+            screen_path = database.get_files(addr)[-1][1]
+        except:
+            screen_path = ""
+
+        # Validate the IP.
         if validate_ip(addr):
-            return render_template('overview.html', addr=addr)
+            return render_template('overview.html', addr=addr, screen_path=screen_path)
         return "Invalid IP. You're BAD and you should feel BAD."
 
     @app.route('/data', methods=['POST'])
@@ -41,7 +52,7 @@ def init():
             Strings are plaintext for text and IPs, and filenames for shots.
             If there are a lot, only return 100.
         """
-        #Make sure it's JSON
+        # Make sure it's JSON
         if not request.is_json:
             print("data request was not JSON.")
             abort(400)
@@ -62,18 +73,32 @@ def init():
         if json['type'] == 'ip':
             return jsonify(get_ips())"""
         abort(400)
-        return None # God Fucking Damn You PEP8
+        return None  # God Fucking Damn You PEP8
 
     @app.route('/brewcoffee')
     def make_coffee():
         """Return code 418, as this is a teapot."""
         return "<h1>418</h1>", 418
 
+    @app.after_request
+    def add_header(r):
+        """
+        Add headers to both force latest IE rendering engine or Chrome Frame,
+        and also to cache the rendered page for 10 minutes.
+        """
+        r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        r.headers["Pragma"] = "no-cache"
+        r.headers["Expires"] = "0"
+        r.headers['Cache-Control'] = 'public, max-age=0'
+        return r
+
     return app
+
 
 def validate_ip(_addr):
     """Tell if an IP is a valid IP."""
     return True
+
 
 def get_text(_since, addr, database):
     """Get text later than since from the db"""
@@ -83,9 +108,11 @@ def get_text(_since, addr, database):
         parsed.append(entry[1])
     return parsed
 
+
 def get_shots(_since):
     """Get screenshots later than since"""
     return None
+
 
 def get_ips():
     """Return all IP addresses in the DB"""
