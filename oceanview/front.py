@@ -24,7 +24,7 @@ def init():
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
         # Grab screencapture filepath from database
-        screen_path = database.get_files(addr)
+        screen_path = database.get_files(addr)[-1][1]
 
         # Validate the IP.
         if validate_ip(addr):
