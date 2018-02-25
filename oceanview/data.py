@@ -6,6 +6,7 @@ from os.path import exists
 import sqlite3
 from database.utilities import validate_ip as vip
 
+
 # Also disabling warning about catch-all excepts
 # pylint: disable=W0702
 class Database(object):
