@@ -179,6 +179,18 @@ class Database(object):
             return {}
         return results
 
+    def get_unique_hosts(self):
+        """Get a list of unique hosts in the database"""
+        # construct and execute query
+        qry = "SELECT DISTINCT {} FROM {};".format("ip", "timestamps")
+        self.cur.execute(qry)
+        results = self.cur.fetchall()
+
+        # return results if query succeeds
+        if not results:
+            return {}
+        return results
+
     def generic(self, table, col, val):
         """
         Use this function as a template for new query commands
