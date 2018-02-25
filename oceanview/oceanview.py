@@ -31,10 +31,8 @@ def main():
         did_something = True
         database = data.Database("db.sqlite", "database/build_db.sql")
         print("Adding Test Data to Database...")
-        print("Adding keystrokes...")
         dbutil.add_test_data(database)
-        print("Keystrokes added to test IP 127.127.127.127")
-        print("Test files/screenshots not yet implemented.")
+        print("Test data added to test IP 127.127.127.127")
 
     # The user wants the front end launched
     if 'front' in sys.argv or 'both' in sys.argv:

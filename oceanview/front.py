@@ -81,7 +81,7 @@ def init():
         return "<h1>418</h1>", 418
 
     @app.after_request
-    def add_header(r):
+    def add_header(r): # pylint: disable=c0103
         """
         Add headers to both force latest IE rendering engine or Chrome Frame,
         and also to cache the rendered page for 10 minutes.
@@ -109,7 +109,7 @@ def get_text(_since, addr, database):
     return parsed
 
 
-def get_shots(_since):
+def get_shots(_since, addr, database):
     """Get screenshots later than since"""
     return None
 
