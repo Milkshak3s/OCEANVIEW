@@ -186,10 +186,13 @@ class Database(object):
         self.cur.execute(qry)
         results = self.cur.fetchall()
 
-        # return results if query succeeds
-        if not results:
-            return {}
-        return results
+        # fix results into proper array
+        new_results = []
+        for item in results:
+            new_results += [item[0]]
+
+        # return results
+        return new_results
 
     def generic(self, table, col, val):
         """
