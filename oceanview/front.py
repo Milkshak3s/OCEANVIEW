@@ -6,6 +6,7 @@ author: Ethan Witherington.
 from flask import Flask, render_template, request, abort, jsonify
 import data as databaseobj
 
+
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
 def init():
@@ -22,9 +23,12 @@ def init():
     @app.route('/overview/<string:addr>')
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
-        # Firstly, validate the IP.
+        # Grab screencapture filepath from database
+        screen_path = database.get_files(addr)[-1][1]
+
+        # Validate the IP.
         if validate_ip(addr):
-            return render_template('overview.html', addr=addr)
+            return render_template('overview.html', addr=addr, screen_path=screen_path)
         return "Invalid IP. You're BAD and you should feel BAD."
 
     @app.route('/data', methods=['POST'])
@@ -41,7 +45,7 @@ def init():
             Strings are plaintext for text and IPs, and filenames for shots.
             If there are a lot, only return 100.
         """
-        #Make sure it's JSON
+        # Make sure it's JSON
         if not request.is_json:
             print("data request was not JSON.")
             abort(400)
@@ -62,7 +66,7 @@ def init():
         if json['type'] == 'ip':
             return jsonify(get_ips())"""
         abort(400)
-        return None # God Fucking Damn You PEP8
+        return None  # God Fucking Damn You PEP8
 
     @app.route('/brewcoffee')
     def make_coffee():
@@ -71,9 +75,11 @@ def init():
 
     return app
 
+
 def validate_ip(_addr):
     """Tell if an IP is a valid IP."""
     return True
+
 
 def get_text(_since, addr, database):
     """Get text later than since from the db"""
@@ -83,9 +89,11 @@ def get_text(_since, addr, database):
         parsed.append(entry[1])
     return parsed
 
+
 def get_shots(_since):
     """Get screenshots later than since"""
     return None
+
 
 def get_ips():
     """Return all IP addresses in the DB"""

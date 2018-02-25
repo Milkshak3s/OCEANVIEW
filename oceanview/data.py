@@ -6,6 +6,7 @@ from os.path import exists
 import sqlite3
 from database.utilities import validate_ip as vip
 
+
 # Also disabling warning about catch-all excepts
 # pylint: disable=W0702
 class Database(object):
@@ -138,7 +139,7 @@ class Database(object):
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the filename to the database
-        self.cur.execute(qry2, (addr, filename))
+        self.cur.execute(qry2, (addr, "/" + filename))
         # Write the changes to the DB
         self.conn.commit()
 

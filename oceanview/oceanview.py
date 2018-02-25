@@ -8,19 +8,8 @@ import back
 import data
 import database.utilities as dbutil
 
-"""
-    To Change the Font-end:
-        Make sure the new front end has an 'init' function that returns a flask app.
-        change the above import line from
-
-            import front as front
-
-        to
-
-            import newfront as front
-
-        where newfront is whatever the new frontend is called.
-"""
+# interface to listen on (global)
+interface = "0.0.0.0"
 
 def main():
     """
@@ -51,13 +40,13 @@ def main():
     if 'front' in sys.argv or 'both' in sys.argv:
         did_something = True
         frontend = front.init()
-        frontend.run('127.0.0.1', 8000)
+        frontend.run(interface, 8000)
 
     # The user wants the back end launched.
     if 'back' in sys.argv or 'both' in sys.argv:
         did_something = True
         backend = back.init()
-        backend.run('127.0.0.1', 80)
+        backend.run(interface, 80)
 
     # did_something is False, nothing was done, show the usage info.
     if did_something is False:
