@@ -139,7 +139,7 @@ class Database(object):
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the filename to the database
-        self.cur.execute(qry2, (addr, filename))
+        self.cur.execute(qry2, (addr, "/" + filename))
         # Write the changes to the DB
         self.conn.commit()
 
