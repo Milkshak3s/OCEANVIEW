@@ -36,8 +36,8 @@ CREATE TABLE `files` (
 
 -- Store screenshots sent up from the client
 CREATE TABLE `tags` (
-	`id`				INTEGER,
+  `id`        INTEGER,
 	`ip`        TEXT,
   `tag`				TEXT,
         PRIMARY KEY(`id` ASC)
-) WITHOUT ROWID;
+);
