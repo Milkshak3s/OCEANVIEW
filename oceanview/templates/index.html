@@ -11,6 +11,7 @@
             <h1>O C E A N V I E W</h1>
         </div>
         <div class="targets">
+            <!--
             {% for item in hosts %}
             <a class="target altitude1 hoverlift hoverlift3" href="overview/{{ item }}">
                 <span>
@@ -18,6 +19,27 @@
                 </span>
             </a>
             {% endfor %}
+            -->
+            <!-- The goal, what things will come out to look like. -->
+            <div class="target altitude1">
+                <!-- IP / A -->
+                <a href="overview/127.127.127.127">127.127.127.127</a>
+                <!-- Container for the Tags -->
+                <div class="tags">
+                    <div class="tag">
+                        <!--
+                             This next line looks weird but it is needed.
+                             Inserting a newline here would insert a space
+                             in the final product. Inline shit and all that.
+                         -->
+                        <span>Machine</span><div class="tagX">
+                            x
+                        </div>
+                    </div>
+                </div>
+                <!-- Input to add more tags -->
+                <input type="text" name="addtag" value="addtag">
+            </div>
         </div>
     </body>
 </html>

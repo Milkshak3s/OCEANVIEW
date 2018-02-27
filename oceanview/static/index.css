@@ -23,13 +23,50 @@ body{
     text-align: center;
 }
 .target{
-    text-decoration: none;
     background-color: white;
     padding: 1em;
     margin: 1em;
     display: inline-block;
-}
-.target span{
     font-family: sans-serif;
+}
+.target > a{
+    display: block;
+    border: 1px solid #4d81a5;
+    text-decoration: none;
+    padding: 1em;
     color: black;
+}
+.target > a:hover{
+    box-shadow: 0px 0px 8px -1px #4d81a5;
+}
+.tags{
+    display: flex;
+    margin-top: 1em;
+}
+.tag{
+    background-color: red;
+    border: 1px solid black;
+    padding: 1px;
+    font-size: 0.8em;
+}
+.tag > span{
+    margin:  1px;
+    padding: 1px;
+}
+.tagX{
+    display: inline-block;
+    border: 1px solid black;
+    margin: 1px;
+    padding: 1px 2px;
+}
+.target{
+    padding-bottom: 0;
+}
+.target > input{
+    transform: scaleY(0);
+    transition: margin 100ms ease-in-out, transform 100ms ease-in-out;
+}
+.target:hover > input{
+    margin: 1em 0;
+    transform: scaleY(1);
 }
