@@ -27,19 +27,9 @@
                 <a href="overview/127.127.127.127">127.127.127.127</a>
                 <!-- Container for the Tags -->
                 <div class="tags">
-                    <div class="tag">
-                        <!--
-                             This next line looks weird but it is needed.
-                             Inserting a newline here would insert a space
-                             in the final product. Inline shit and all that.
-                         -->
-                        <span>Machine</span><div class="tagX">
-                            x
-                        </div>
-                    </div>
                 </div>
                 <!-- Input to add more tags -->
-                <input type="text" name="addtag" value="addtag">
+                <input type="text" onKeyDown="if(event.keyCode==13) addtag(this);">
             </div>
         </div>
     </body>

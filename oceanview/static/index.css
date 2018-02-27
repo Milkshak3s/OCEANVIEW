@@ -28,6 +28,7 @@ body{
     margin: 1em;
     display: inline-block;
     font-family: sans-serif;
+    max-width: min-content;
 }
 .target > a{
     display: block;
@@ -41,28 +42,41 @@ body{
 }
 .tags{
     display: flex;
-    margin-top: 1em;
+    flex-wrap: wrap;
+    max-width: 100%;
+    flex-grow: 0;
 }
+
 .tag{
-    background-color: red;
     border: 1px solid black;
     padding: 1px;
     font-size: 0.8em;
+    margin-top: 1em;
+    margin-right: 1em;
 }
 .tag > span{
     margin:  1px;
     padding: 1px;
+}
+.tag:first-child{
 }
 .tagX{
     display: inline-block;
     border: 1px solid black;
     margin: 1px;
     padding: 1px 2px;
+    text-decoration: none;
+    color: black;
+}
+.tagX:hover{
+    border-color: white;
+    color: white;
 }
 .target{
     padding-bottom: 0;
 }
 .target > input{
+    margin: -1em 0;
     transform: scaleY(0);
     transition: margin 100ms ease-in-out, transform 100ms ease-in-out;
 }
