@@ -195,6 +195,21 @@ class Database(object):
             return {}
         return results
 
+    def get_tags(self, addr):
+        """Get a list of tags for a given host in the database"""
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("tags", "ip")
+        self.cur.execute(qry, (addr,))
+        results = self.cur.fetchall()
+
+        # fix results into proper array
+        new_results = []
+        for item in results:
+            new_results += [item[2]]
+
+        # return results
+        return new_results
+
     def get_unique_hosts(self):
         """Get a list of unique hosts in the database"""
         # construct and execute query
