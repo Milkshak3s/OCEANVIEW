@@ -153,6 +153,15 @@ def get_ips(database):
         obj["ip"] = host
         obj["tags"] = []
         tags = database.get_tags(host)
-        print(tags)
+        """
+        database.get_tags(host) returns:
+        [
+            'testing',
+            'guac',
+            'guacamole.'
+        ]
+        """
+        for tag in tags:
+            obj["tags"].append(tag)
         final.append(obj)
     return final

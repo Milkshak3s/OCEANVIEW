@@ -1,3 +1,95 @@
+/*
+    OCEANVIEW index.js
+    To load IPS and Tags.
+    To Add/Remove Tags.
+    author: Ethan Witherington etw9578@rit.edu
+*/
+
+window.onload = function() {
+    // Get data where the loading things are.
+    request("ip", 0, "broadcast", function(json){
+        console.log(json)
+        for(host of json){
+            document.getElementById("targetbox").appendChild(buildhost(host));
+        }
+    })
+}
+
+function request(type, since, addr, callback){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            callback(JSON.parse(this.responseText));
+        }
+    };
+    xhttp.open("POST", "/data", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify({type: type, since: since, addr: addr}));
+}
+
+var buildhost = function(host){
+
+    // What we get:
+    /*
+    {
+        "ip": 127.127.127.127
+        "tags": [
+            "testing",
+            "test"
+        ]
+    }
+    */
+    // What we need to build:
+    /*
+    <div class="target altitude1">
+        <!-- IP / A -->
+        <a href="overview/127.127.127.127">127.127.127.127</a>
+        <!-- Container for the Tags -->
+        <div class="tags">
+        </div>
+        <!-- Input to add more tags -->
+        <input type="text" onKeyDown="if(event.keyCode==13) addTagFromInput(this);">
+    </div>
+    */
+
+    // Outer Div
+    var outerdiv = document.createElement('div');
+    outerdiv.classList.add("target");
+    outerdiv.classList.add("altitude1");
+
+    console.log("host: "+host);
+    console.log("hostip: "+host.ip)
+    console.log("hosttags: "+host.tags)
+
+    // Build host link
+    var hostlink = document.createElement('a');
+    hostlink.href = "overview/"+host.ip;
+    hostlink.appendChild(document.createTextNode(host.ip));
+    outerdiv.appendChild(hostlink);
+
+    // Build tagbox
+    var tagbox = document.createElement('div');
+    tagbox.classList.add("tags");
+    outerdiv.appendChild(tagbox);
+
+    // Put new tags into the tagbox
+    for(tag of host.tags){
+        addTag(tag, tagbox);
+    }
+
+    // Build input bar for adding more tags
+    var inbar = document.createElement('input');
+    inbar.type = 'text';
+    inbar.onkeydown = function(e){
+        if(event.keyCode==13) addTagFromInput(this);
+    }
+    outerdiv.appendChild(inbar);
+
+    return outerdiv;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Adding tags to things ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 var addTagFromInput = function(input){
     // First of all, make sure it's legit.
     if(input.value==""){
