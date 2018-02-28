@@ -147,12 +147,9 @@ var hashToColor = function(seed){
     var green = Math.floor(rand_2)*3;
     var blue  = Math.floor(rand_3)*3;
 
-    console.log("color: "+red+", "+green+", "+blue);
-
     // Make sure it's a bright, tasty color.
     var L = calcLuminosity(red*17, green*17, blue*17);
     if(L <= 0.179){ // luminosity too low, invert.
-        console.log("invert the above.")
         red = 15-red;
         green = 15-green;
         blue = 15-blue;
@@ -162,7 +159,6 @@ var hashToColor = function(seed){
 }
 var calcLuminosity = function(red, green, blue){
     // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
-    console.log("calculating: "+red+", "+green+", "+blue);
     var rgb = [red, green, blue];
     for(var i=0; i<3; i++){
         var c = rgb[i];
