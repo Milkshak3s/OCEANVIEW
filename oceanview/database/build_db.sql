@@ -34,10 +34,18 @@ CREATE TABLE `files` (
         PRIMARY KEY(`time`)
 ) WITHOUT ROWID;
 
--- Store screenshots sent up from the client
+-- Store tags for hosts set by the user
 CREATE TABLE `tags` (
   `id`        INTEGER,
 	`ip`        TEXT,
   `tag`				TEXT,
+        PRIMARY KEY(`id` ASC)
+);
+
+-- Assign a unique identifier to hosts based on their MAC and LAN addresses
+CREATE TABLE `identities` (
+  `id`  INTEGER,
+  `ip`  TEXT,
+  `mac` TEXT,
         PRIMARY KEY(`id` ASC)
 );
