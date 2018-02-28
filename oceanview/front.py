@@ -21,6 +21,7 @@ def init():
         """Display returning hosts"""
         # grab unique hosts from database
         hosts = database.get_unique_hosts()
+        # returns ['ip1', 'ip2']
 
         # render template
         return render_template('index.html', hosts=hosts)
@@ -70,9 +71,21 @@ def init():
         if json['type'] == 'text':
             return jsonify(get_text(json['since'], json['addr'], database))
         """if json['type'] == 'shot':
-            return jsonify(get_shots(json['since']))
+            return jsonify(get_shots(json['since']))"""
         if json['type'] == 'ip':
-            return jsonify(get_ips())"""
+            return jsonify(get_ips(database))
+            """
+                get_ips(database) returns:
+                [
+                    {
+                        "ip": 127.127.127.127
+                        "tags": [
+                            "testing",
+                            "test"
+                        ]
+                    }
+                ]
+            """
         abort(400)
         return None  # God Fucking Damn You PEP8
 
@@ -130,6 +143,16 @@ def get_shots(_since, addr, database):
     return None
 
 
-def get_ips():
+def get_ips(database):
     """Return all IP addresses in the DB"""
-    return None
+    hosts = database.get_unique_hosts()
+    # returns ['ip1', 'ip2']
+    final = []
+    for host in hosts:
+        obj = {}
+        obj["ip"] = host
+        obj["tags"] = []
+        tags = database.get_tags(host)
+        print(tags)
+        final.append(obj)
+    return final

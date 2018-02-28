@@ -19,8 +19,8 @@ TEST_TEXT = [
 ]
 
 
-# pylint: disable=W0702
-def validate_ip(addr):
+# pylint: disable=W0702, W0613
+def validate_ip(addr): # W0613 suppresses addr not used warning.
     """
     Validate that an IP address is legitimate
     """
@@ -45,3 +45,10 @@ def add_test_data(database):
     database.add_file(addr='127.127.127.127', filename='static/wave.jpg')
     time.sleep(1)
     database.add_file(addr='127.127.127.127', filename='static/dog.jpg')
+    print("Adding Tags to test IP...")
+    database.add_tag("127.127.127.127", "testing")
+    time.sleep(1)
+    database.add_tag("127.127.127.127", "guac")
+    time.sleep(1)
+    database.add_tag("127.127.127.127", "guacamole.")
+    print("Test Data Added.")
