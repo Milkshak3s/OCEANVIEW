@@ -12,7 +12,11 @@
             <h1>O C E A N V I E W</h1>
         </div>
         <div class="targets" id="targetbox">
+
             <!--
+
+            Jinja element construction, from before the tag system.
+
             {% for item in hosts %}
             <a class="target altitude1 hoverlift hoverlift3" href="overview/{{ item }}">
                 <span>
@@ -20,17 +24,27 @@
                 </span>
             </a>
             {% endfor %}
+
             -->
-            <!-- The goal, what things will come out to look like. -->
+            <!--
+
+            This is what the current ajax system builds.
+            If you calculate tag colors server-side, this
+            could be converted to jinja if it had to be, though
+            loading times would be crazy.
+
             <div class="target altitude1">
-                <!-- IP / A -->
                 <a href="overview/127.127.127.127">127.127.127.127</a>
-                <!-- Container for the Tags -->
                 <div class="tags">
+                    <div class="tag" style="background-color: rgb(51, 255, 51);">
+                        <span>tag</span><a class="tagX" href="#" data-vivaldi-spatnav-clickable="1">x</a>
+                    </div>
                 </div>
-                <!-- Input to add more tags -->
                 <input type="text" onKeyDown="if(event.keyCode==13) addTagFromInput(this);">
             </div>
+
+             -->
+             
         </div>
     </body>
 </html>

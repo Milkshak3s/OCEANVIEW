@@ -6,15 +6,15 @@
 */
 
 window.onload = function() {
-    // Get data where the loading things are.
+    // Get the IPs and Tags, and built the rest of the page.
     request("ip", 0, "broadcast", function(json){
-        console.log(json)
         for(host of json){
             document.getElementById("targetbox").appendChild(buildhost(host));
         }
     })
 }
 
+// Make a request, call the supplied callback with the response.
 function request(type, since, addr, callback){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -27,10 +27,11 @@ function request(type, since, addr, callback){
     xhttp.send(JSON.stringify({type: type, since: since, addr: addr}));
 }
 
+// Given an IP and that IP's tags, build an element for the page.
 var buildhost = function(host){
-
-    // What we get:
     /*
+    What we get:
+
     {
         "ip": 127.127.127.127
         "tags": [
@@ -38,9 +39,9 @@ var buildhost = function(host){
             "test"
         ]
     }
-    */
-    // What we need to build:
-    /*
+
+    What we need to build:
+
     <div class="target altitude1">
         <!-- IP / A -->
         <a href="overview/127.127.127.127">127.127.127.127</a>
@@ -50,16 +51,13 @@ var buildhost = function(host){
         <!-- Input to add more tags -->
         <input type="text" onKeyDown="if(event.keyCode==13) addTagFromInput(this);">
     </div>
+
     */
 
-    // Outer Div
+    // Build Outer Div
     var outerdiv = document.createElement('div');
     outerdiv.classList.add("target");
     outerdiv.classList.add("altitude1");
-
-    console.log("host: "+host);
-    console.log("hostip: "+host.ip)
-    console.log("hosttags: "+host.tags)
 
     // Build host link
     var hostlink = document.createElement('a');
@@ -88,8 +86,7 @@ var buildhost = function(host){
     return outerdiv;
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Adding tags to things ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+// inputs call this when the user adds a tag.
 var addTagFromInput = function(input){
     // First of all, make sure it's legit.
     if(input.value==""){
@@ -98,11 +95,23 @@ var addTagFromInput = function(input){
     addTag(input.value, input.previousElementSibling);
     input.value = "";
 }
+
 /*
+Build a tag, and put it in an element.
 text: The text of the tag to add.
 target: The element to put the tag inside of.
 */
 var addTag = function(text, target){
+    // Build the parent tag element
+    var newtag = document.createElement('div');
+    newtag.classList.add("tag");
+    newtag.style.backgroundColor = hashToColor(hashString(text));
+
+    // Build the span with the tag text
+    var tagnamespan = document.createElement('span');
+    tagnamespan.appendChild(document.createTextNode(text));
+    newtag.appendChild(tagnamespan);
+
     // We'll need a delete button.
     var tagx = document.createElement('a');
     tagx.classList.add("tagX");
@@ -111,20 +120,14 @@ var addTag = function(text, target){
     tagx.addEventListener("click", function(){
         tagx.parentNode.parentNode.removeChild(tagx.parentNode);
     }, false);
-    // We'll need a name span for the tag
-    var tagnamespan = document.createElement('span');
-    tagnamespan.appendChild(document.createTextNode(text));
-    // Create the parent tag element
-    var newtag = document.createElement('div');
-    newtag.classList.add("tag");
-    newtag.style.backgroundColor = hashToColor(hashString(text));
-    newtag.appendChild(tagnamespan);
     newtag.appendChild(tagx);
-    // Attach our new tag to the tags container.
+
+    // Attach our new tag to the target container.
     target.appendChild(newtag);
 }
 
-// ~~~~~~~~~~~~~~~~~~~~  Tag Color Generation. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~  Tag Color Generation. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// I spent too much time on this, but it's awesome.
 
 var hashString = function(str){
     var hash = 0;
