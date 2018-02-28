@@ -89,6 +89,7 @@ var buildhost = function(host){
 var rmtag = function(tagx){
     var tag = tagx.previousElementSibling.innerHTML;
     var ip = tagx.parentElement.parentElement.previousElementSibling.innerHTML;
+    tagx.parentNode.parentNode.removeChild(tagx.parentNode);
     request({type: "rmtag", addr: ip, tag: tag}, function(response){});
 }
 
