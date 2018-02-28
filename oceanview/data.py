@@ -225,6 +225,13 @@ class Database(object):
         # return results
         return new_results
 
+    def remove_tag(self, addr, tag):
+        """Remove a given tag from the database"""
+        # construct and execute query
+        qry = "DELETE FROM {} WHERE {} = ? AND {} = ?;".format("tags", "ip", "tag")
+        self.cur.execute(qry, (addr, tag))
+        results = self.cur.fetchall()
+
     def generic(self, table, col, val):
         """
         Use this function as a template for new query commands

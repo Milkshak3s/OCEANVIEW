@@ -44,7 +44,7 @@ def main():
     if 'back' in sys.argv or 'both' in sys.argv:
         did_something = True
         backend = back.init()
-        backend.run('INTERFACE', 80)
+        backend.run(INTERFACE, 80)
 
     # did_something is False, nothing was done, show the usage info.
     if did_something is False:
