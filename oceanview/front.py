@@ -69,24 +69,15 @@ def init():
         # Handle an IP and TAG request.
         if json['type'] == 'ip':
             return jsonify(get_ips(database))
-            """
-                get_ips(database) returns:
-                [
-                    {
-                        "ip": "127.127.127.127"
-                        "tags": [
-                            "testing",
-                            "test"
-                        ]
-                    },
-                    {
-                        "ip": "anotherip"
-                        "tags": [
-
-                        ]
-                    }
-                ]
-            """
+        if json['type'] == 'addtag':
+            if not 'addr' in json:
+                print("addtag request did not include an address")
+                abort(400)
+            if not 'tag' in json:
+                print("addtag request did not include a tag.")
+                abort(400)
+            database.add_tag(addr=json['addr'], tag=json['tag'])
+            return ('', 204) # http status code no content
         # The request did not match any types that we handle.
         abort(400)
         return None  # God Fucking Damn You PEP8

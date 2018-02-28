@@ -7,7 +7,7 @@
 
 window.onload = function() {
     // Get the IPs and Tags, and built the rest of the page.
-    request("ip", 0, "broadcast", function(json){
+    request({type: "ip"}, function(json){
         for(host of json){
             document.getElementById("targetbox").appendChild(buildhost(host));
         }
@@ -15,7 +15,7 @@ window.onload = function() {
 }
 
 // Make a request, call the supplied callback with the response.
-function request(type, since, addr, callback){
+function request(data, callback){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -24,7 +24,7 @@ function request(type, since, addr, callback){
     };
     xhttp.open("POST", "/data", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.send(JSON.stringify({type: type, since: since, addr: addr}));
+    xhttp.send(JSON.stringify(data));
 }
 
 // Given an IP and that IP's tags, build an element for the page.
@@ -93,6 +93,9 @@ var addTagFromInput = function(input){
         return;
     }
     addTag(input.value, input.previousElementSibling);
+    // Tell the Database to add the tag
+    var ip = input.previousElementSibling.previousElementSibling.innerHTML;
+    request({type: "addtag", addr: ip, tag: input.value},function(json){})
     input.value = "";
 }
 
