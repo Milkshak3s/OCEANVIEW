@@ -230,7 +230,12 @@ class Database(object):
         # construct and execute query
         qry = "DELETE FROM {} WHERE {} = ? AND {} = ?;".format("tags", "ip", "tag")
         self.cur.execute(qry, (addr, tag))
-        results = self.cur.fetchall()
+
+        # vacuum database
+        qry2 = "END TRANSACTION;"
+        qry3 = "VACUUM;"
+        self.cur.execute(qry2, )
+        self.cur.execute(qry3,)
 
     def generic(self, table, col, val):
         """
