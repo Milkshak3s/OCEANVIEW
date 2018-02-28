@@ -3,10 +3,9 @@ show what's in OCEANVIEW's database.
 author: Ethan Witherington.
 """
 
+import html
 from flask import Flask, render_template, request, abort, jsonify
 import data as databaseobj
-import html
-
 
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612
@@ -26,6 +25,8 @@ def init():
         # render template
         return render_template('index.html', hosts=hosts)
 
+    # Warning on except; no exception types specified. Noted. Thanks pep8.
+    # pylint: disable=W0702
     @app.route('/overview/<string:addr>')
     def machine(addr='192.168.420.69'):
         """Show info about a specific machine"""
@@ -43,49 +44,50 @@ def init():
     @app.route('/data', methods=['POST'])
     def data():
         """
-            Take some JSON, return what it asks for.
-            {
-                type: "text" or "shot" or "ip"
-                since: timestamp # Get all of type since this time. Return all IPs.
-                addr: IP address of the machine we want data about.
-            }
-            return all (type)s that have a timestamp later than (since)
-            in the form of an array of strings.
-            Strings are plaintext for text and IPs, and filenames for shots.
-            If there are a lot, only return 100.
+        Handle a JSON request sent by the client.
+        Should include a type and optionally some data.
         """
         # Make sure it's JSON
         if not request.is_json:
             print("data request was not JSON.")
             abort(400)
         json = request.get_json()
+        # Make sure the type is specified.
         if not 'type' in json:
             print("data request did not include a type")
             abort(400)
-        if not 'since' in json:
-            print("data request did not include a since")
-            abort(400)
-        if not 'addr' in json:
-            print("data request did not include an ip address.")
-            abort(400)
+        # Handle a Text Update request
         if json['type'] == 'text':
+            # Make sure we have a since and addr field
+            if not 'since' in json:
+                print("data request did not include a since")
+                abort(400)
+            if not 'addr' in json:
+                print("data request did not include an ip address.")
+                abort(400)
             return jsonify(get_text(json['since'], json['addr'], database))
-        """if json['type'] == 'shot':
-            return jsonify(get_shots(json['since']))"""
+        # Handle an IP and TAG request.
         if json['type'] == 'ip':
             return jsonify(get_ips(database))
             """
                 get_ips(database) returns:
                 [
                     {
-                        "ip": 127.127.127.127
+                        "ip": "127.127.127.127"
                         "tags": [
                             "testing",
                             "test"
                         ]
+                    },
+                    {
+                        "ip": "anotherip"
+                        "tags": [
+
+                        ]
                     }
                 ]
             """
+        # The request did not match any types that we handle.
         abort(400)
         return None  # God Fucking Damn You PEP8
 
@@ -144,9 +146,15 @@ def get_shots(_since, addr, database):
 
 
 def get_ips(database):
-    """Return all IP addresses in the DB"""
+    """Return all IP addresses in the DB with Tags"""
     hosts = database.get_unique_hosts()
-    # returns ['ip1', 'ip2']
+    """
+    database.get_unique_hosts returns:
+    [
+        'ip1',
+        'ip2'
+    ]
+    """
     final = []
     for host in hosts:
         obj = {}
