@@ -78,7 +78,18 @@ def init():
                 abort(400)
             database.add_tag(addr=json['addr'], tag=json['tag'])
             return ('', 204) # http status code no content
+        if json['type'] == 'rmtag':
+            if not 'addr' in json:
+                print("rmtag request did not include an address")
+                abort(400)
+            if not 'tag' in json:
+                print("rmtag request did not include a tag.")
+                abort(400)
+            # database.add_tag(addr=json['addr'], tag=json['tag'])
+            return ('', 204) # http status code no content
         # The request did not match any types that we handle.
+        print("The following request is incorrect:")
+        print(json)
         abort(400)
         return None  # God Fucking Damn You PEP8
 

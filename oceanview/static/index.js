@@ -86,6 +86,12 @@ var buildhost = function(host){
     return outerdiv;
 }
 
+var rmtag = function(tagx){
+    var tag = tagx.previousElementSibling.innerHTML;
+    var ip = tagx.parentElement.parentElement.previousElementSibling.innerHTML;
+    request({type: "rmtag", addr: ip, tag: tag}, function(response){});
+}
+
 // inputs call this when the user adds a tag.
 var addTagFromInput = function(input){
     // First of all, make sure it's legit.
@@ -120,9 +126,9 @@ var addTag = function(text, target){
     tagx.classList.add("tagX");
     tagx.href="#"; // so mousover looks clickable
     tagx.appendChild(document.createTextNode("x"));
-    tagx.addEventListener("click", function(){
-        tagx.parentNode.parentNode.removeChild(tagx.parentNode);
-    }, false);
+    tagx.onclick = function(){
+        rmtag(this);
+    };
     newtag.appendChild(tagx);
 
     // Attach our new tag to the target container.
