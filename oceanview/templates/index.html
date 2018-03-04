@@ -5,12 +5,21 @@
         <title>OCEANVIEW</title>
         <link rel="stylesheet" href="static/index.css">
         <link rel="stylesheet" href="static/shadow.css">
+        <script src="static/index.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="titleblock">
             <h1>O C E A N V I E W</h1>
         </div>
-        <div class="targets">
+        <div id="searchdiv">
+            <input type="text" id="search" onkeyup="filter(this)" placeholder="Tag1, Tag2, ...">
+        </div>
+        <div class="targets" id="targetbox">
+
+            <!--
+
+            Jinja element construction, from before the tag system.
+
             {% for item in hosts %}
             <a class="target altitude1 hoverlift hoverlift3" href="overview/{{ item }}">
                 <span>
@@ -18,6 +27,27 @@
                 </span>
             </a>
             {% endfor %}
+
+            -->
+            <!--
+
+            This is what the current ajax system builds.
+            If you calculate tag colors server-side, this
+            could be converted to jinja if it had to be, though
+            loading times would be crazy.
+
+            <div class="target altitude1">
+                <a href="overview/127.127.127.127">127.127.127.127</a>
+                <div class="tags">
+                    <div class="tag" style="background-color: rgb(51, 255, 51);">
+                        <span>tag</span><a class="tagX" href="#" data-vivaldi-spatnav-clickable="1">x</a>
+                    </div>
+                </div>
+                <input type="text" onKeyDown="if(event.keyCode==13) addTagFromInput(this);">
+            </div>
+
+             -->
+
         </div>
     </body>
 </html>

@@ -2,11 +2,11 @@
 A platform for tracking blue team activity
 Author: Chris Vantine
 """
+
 import os
 from flask import Flask, request
 from werkzeug.utils import secure_filename
 import data as databaseobj
-
 
 # route functions flagged as unused, disabling warning for this function.
 # Also disabling warning about catch-all excepts
@@ -18,6 +18,15 @@ def init():
     app = Flask(__name__)
     app.config['UPLOAD_FOLDER'] = 'static/'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg'}
+
+    # This is defined here so that app exists and the things that need this
+    # can have this.
+    def allowed_file(filename):
+        """
+        checks if file is allowed
+        """
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
     @app.route("/conn")
     @app.route("/conn/")
@@ -47,8 +56,8 @@ def init():
         try:
             file = request.files['file']
             # don't know why this breaks
-            # if allowed_file(file.filename):
-            if True:
+            if allowed_file(file.filename):
+            #if True:
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -57,6 +66,9 @@ def init():
                 return "success"
         except:
             return "failed"
+
+        return None
+        # I h8 pep8
 
     @app.route("/key/<host>/", methods=['POST'])
     def keylog_handler(host):
@@ -76,11 +88,3 @@ def init():
             return "failed"
 
     return app
-
-
-def allowed_file(filename):
-    """
-    checks if file is allowed
-    """
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
