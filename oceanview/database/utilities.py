@@ -3,8 +3,8 @@ Various functions that are required by other modules
 Author: Micah Martin
 """
 
-TEST_IPS_NUM = 50
-TEST_TEAM_NUMS = 7
+TEST_IPS_NUM = 254
+TEST_TEAM_NUMS = 11
 
 TEST_TEXT = [
     b"<5p3c1@l> Chars work &<|>",
@@ -13,23 +13,37 @@ TEST_TEXT = [
 ]
 
 TEST_TAGS_WINDOWS = [
+    "ICMP",
+    "http/nodejs",
+
+    "VoIP",
+    "Samba",
+    "FTP",
+
+    "Minecraft",
+    "Steam",
+    "Printer?",
+    "418 TEAPOT",
     "rdp",
     "Active Directory",
-    "ICMP",
-    "Minecraft",
-    "samba"
+    "NTP"
 ]
 
 TEST_TAGS_LINUX = [
     "ICMP",
-    "SSH",
-    "http",
+    "http/nginx",
+
     "mysql",
-    "nodejs",
-    "apache",
-    "Arch Linux",
+    "php",
+    "Samba",
+    "FTP",
+
+    "SSH",
+    "Arch",
     "Ubuntu",
-    "FreeBSD"
+    "CentOS",
+    "FreeBSD",
+    "Gentoo"
 ]
 
 # pylint: disable=W0702, W0613
@@ -50,19 +64,37 @@ def validate_ip(addr): # W0613 suppresses addr not used warning.
 
 def add_test_data(database):
     """ Put test data into the database """
-
-    print("Adding test data...")
+    # Variable database of tuples
+    files = []
+    keys = []
+    tags = []
+    ips = []
+    print("Generating test data... ", end=' ', flush=True)
     for ip_suffix in range(2, TEST_IPS_NUM):
         ip = "127.0.0."+str(ip_suffix) # pylint: disable=C0103
-        database.add_file(ip, 'static/dog.jpg')
+        ips.append((ip,))
+        files.append((ip, '/static/dog.jpg'))
         for text in TEST_TEXT:
-            database.add_keystroke(ip, text)
-        database.add_tag(ip, "test")
+            keys.append((ip, text))
+        tags.append((ip, "test"))
         if ip_suffix % 2 is 0:
-            database.add_tag(ip, "Windows")
-            database.add_tag(ip, TEST_TAGS_WINDOWS[ip_suffix % len(TEST_TAGS_WINDOWS)])
+            tags.append((ip, "Windows"))
+            tags.append((ip, TEST_TAGS_WINDOWS[round(ip_suffix/2) % len(TEST_TAGS_WINDOWS)]))
         else:
-            database.add_tag(ip, "Linux")
-            database.add_tag(ip, TEST_TAGS_LINUX[ip_suffix % len(TEST_TAGS_LINUX)])
-        database.add_tag(ip, "Team "+str(ip_suffix % TEST_TEAM_NUMS))
+            tags.append((ip, "Linux"))
+            tags.append((ip, TEST_TAGS_LINUX[round((ip_suffix+1)/2) % len(TEST_TAGS_LINUX)]))
+        tags.append((ip, "Team "+str(ip_suffix % TEST_TEAM_NUMS)))
+    print("Done!")
+    print("Adding IPS... ", end=' ', flush=True)
+    database.add_bulk_ips(ips)
+    print("Done!")
+    print("Adding Files... ", end=' ', flush=True)
+    database.add_bulk_files(files)
+    print("Done!")
+    print("Adding Keystrokes... ", end=' ', flush=True)
+    database.add_bulk_keystrokes(keys)
+    print("Done!")
+    print("Adding Tags... ", end=' ', flush=True)
+    database.add_bulk_tags(tags)
+    print("Done!")
     print("Test Data Added.")

@@ -237,6 +237,41 @@ class Database(object):
         self.cur.execute(qry2, )
         self.cur.execute(qry3,)
 
+    # Add Bulk functions used when inserting test data to increase performance
+    # Went from multiple minutes to under half a second.
+    def add_bulk_keystrokes(self, tlist):
+        """
+        add a lot of keystrokes.
+        tlist = [(ip, keystroke), (ip, keystroke)]
+        """
+        self.conn.executemany("INSERT INTO keystrokes('ip','keystroke') VALUES(?,?);", tlist)
+        self.conn.commit()
+
+    def add_bulk_files(self, tlist):
+        """
+        add a lot of files.
+        tlist = [(ip, file), (ip, file)]
+        """
+        self.conn.executemany("INSERT INTO files('ip','filename') VALUES(?,?);", tlist)
+        self.conn.commit()
+
+    def add_bulk_tags(self, tlist):
+        """
+        add a lot of tags.
+        tlist = [(ip, tag), (ip, tag)]
+        """
+        self.conn.executemany("INSERT INTO tags('ip','tag') VALUES(?,?);", tlist)
+        self.conn.commit()
+
+    def add_bulk_ips(self, tlist):
+        """
+        add a lot of ips.
+        tlist = [(ip, ), (ip, )]
+        """
+        self.conn.executemany("INSERT INTO timestamps('ip') VALUES(?);", tlist)
+        self.conn.commit()
+
+
     def generic(self, table, col, val):
         """
         Use this function as a template for new query commands
