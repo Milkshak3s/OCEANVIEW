@@ -176,6 +176,7 @@ var addTag = function(text, target){
 // I spent too much time on this, but it's awesome.
 
 var hashString = function(str){
+    str = str.toUpperCase();
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
