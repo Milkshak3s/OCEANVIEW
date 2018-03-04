@@ -20,7 +20,11 @@ body{
     margin: 2em;
 }
 .targets{
-    text-align: center;
+    /* text-align: center; */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .target{
     background-color: white;
