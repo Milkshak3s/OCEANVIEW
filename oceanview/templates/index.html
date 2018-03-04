@@ -5,19 +5,16 @@
         <title>OCEANVIEW</title>
         <link rel="stylesheet" href="static/index.css">
         <link rel="stylesheet" href="static/shadow.css">
+        <script src="static/index.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="titleblock">
             <h1>O C E A N V I E W</h1>
         </div>
-        <div class="targets">
-            {% for item in hosts %}
-            <a class="target altitude1 hoverlift hoverlift3" href="overview/{{ item }}">
-                <span>
-                    {{ item }}
-                </span>
-            </a>
-            {% endfor %}
+        <div id="searchdiv">
+            <input type="text" id="search" onkeyup="filter(this)" placeholder="Tag1, Tag2, ...">
+        </div>
+        <div class="targets" id="targetbox">
         </div>
     </body>
 </html>
