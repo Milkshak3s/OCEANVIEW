@@ -3,8 +3,6 @@ Various functions that are required by other modules
 Author: Micah Martin
 """
 
-import time
-
 TEST_TEXT = [
     b"<5p3c1@l> Chars work &<|>",
     b"This text data was inserted by passing OCEANVIEW the 'maketestdb' command.",
