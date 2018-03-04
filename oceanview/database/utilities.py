@@ -37,9 +37,9 @@ def validate_ip(addr): # W0613 suppresses addr not used warning.
 def add_test_data(database):
     """ Put test data into the database """
     print("Adding test data...")
-    for text in TEST_TEXT:
-        for ip in TEST_IPS: # pylint: disable=C0103
+    for ip in TEST_IPS: # pylint: disable=C0103
+        database.add_file(ip, 'static/dog.jpg')
+        database.add_tag(ip, "test")
+        for text in TEST_TEXT:
             database.add_keystroke(ip, text)
-            database.add_file(ip, 'static/dog.jpg')
-            database.add_tag(ip, "test")
     print("Test Data Added.")
