@@ -5,6 +5,42 @@
     author: Ethan Witherington etw9578@rit.edu
 */
 
+var filter = function(searchbar){
+    // Test, Bitch,   plz   , no => "TEST", "BITCH", "PLZ", "NO"
+    words = searchbar.value.toUpperCase().split(",").map(function(e){return e.trim();});
+    targets = document.getElementsByClassName("target");
+    for(target of targets){
+        if(target_is_relevent(target, words)){
+            target.style.display = "inline-block";
+        }else{
+            target.style.display = "none";
+        }
+    }
+}
+
+var target_is_relevent = function(target, words){
+    tags = Array.from(target.childNodes[1].childNodes).map(function(e){
+        return e.childNodes[0].innerHTML.toUpperCase().trim();
+    });
+    for(word of words){
+        if(matching_tag_exists(word, tags)){
+            continue;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}
+
+var matching_tag_exists = function(word, tags){
+    for(tag of tags){
+        if(tag.indexOf(word) > -1){
+            return true;
+        }
+    }
+    return false;
+}
+
 window.onload = function() {
     // Get the IPs and Tags, and built the rest of the page.
     request({type: "ip"}, function(json){
