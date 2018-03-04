@@ -18,12 +18,7 @@ def init():
     @app.route('/')
     def index():
         """Display returning hosts"""
-        # grab unique hosts from database
-        hosts = database.get_unique_hosts()
-        # returns ['ip1', 'ip2']
-
-        # render template
-        return render_template('index.html', hosts=hosts)
+        return render_template('index.html')
 
     # Warning on except; no exception types specified. Noted. Thanks pep8.
     # pylint: disable=W0702
