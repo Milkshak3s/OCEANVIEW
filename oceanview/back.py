@@ -8,6 +8,7 @@ from flask import Flask, request
 from werkzeug.utils import secure_filename
 import data as databaseobj
 
+
 # route functions flagged as unused, disabling warning for this function.
 # Also disabling warning about catch-all excepts
 # pylint: disable=W0612, W0702
