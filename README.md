@@ -1,4 +1,4 @@
-# OCEANVIEW
+# OCEANVIEW [![Build Status](https://travis-ci.com/Milkshak3s/OCEANVIEW.svg?token=Tt3EuJVvxh3fYVx2TJis&branch=feature/travis_integration)](https://travis-ci.com/Milkshak3s/OCEANVIEW)
 Blue team tracking for the red team
 <br />
 ## Usage
