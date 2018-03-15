@@ -4,7 +4,7 @@ Author: Micah Martin (knif3)
 """
 from os.path import exists
 import sqlite3
-from database.utilities import validate_ip as vip
+from oceanview.database.utilities import validate_ip as vip
 
 
 # Also disabling warning about catch-all excepts
