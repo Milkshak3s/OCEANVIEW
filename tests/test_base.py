@@ -14,7 +14,7 @@ INTERFACE = "127.0.0.1"
 
 
 def test_dbsetup():
-    database = data.Database("db.sqlite", "database/build_db.sql")
+    database = data.Database("db.sqlite", "../oceanview/database/build_db.sql")
     dbutil.add_test_data(database)
 
 
