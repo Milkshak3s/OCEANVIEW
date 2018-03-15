@@ -2,7 +2,7 @@
 *.pyc
 *.png
 .idea/
-test*
+.pytest_cache/
 venv/
 *.png
 *.sqlite

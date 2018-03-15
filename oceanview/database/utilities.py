@@ -1,6 +1,7 @@
 """
 Various functions that are required by other modules
 Author: Micah Martin
+Author: Ethan Witherington
 """
 
 TEST_IPS_NUM = 254
