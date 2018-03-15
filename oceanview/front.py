@@ -5,7 +5,7 @@ Author: Ethan Witherington.
 
 import html
 from flask import Flask, render_template, request, abort, jsonify
-import oceanview.data as databaseobj
+import data as databaseobj
 
 
 # route functions flagged as unused, disabling warning for this function.

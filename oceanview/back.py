@@ -6,7 +6,7 @@ Author: Chris Vantine
 import os
 from flask import Flask, request
 from werkzeug.utils import secure_filename
-import oceanview.data as databaseobj
+import data as databaseobj
 
 
 # route functions flagged as unused, disabling warning for this function.

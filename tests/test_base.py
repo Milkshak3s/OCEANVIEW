@@ -3,6 +3,7 @@ Base tests for pytest integration
 Author: Chris Vantine
 """
 from multiprocessing import Process
+from oceanview import *
 import oceanview.front as front
 import oceanview.back as back
 import oceanview.data as data
@@ -19,7 +20,7 @@ def test_dbsetup():
 
 def test_front_init():
     frontend = front.init()
-    server = Process(target=frontend.run(INTERFACE, 8000))
+    server = Process(target=frontend.run, args=(INTERFACE, 8000))
     server.start()
     server.terminate()
     server.join()
@@ -27,7 +28,7 @@ def test_front_init():
 
 def test_back_init():
     backend = back.init()
-    server=Process(target=backend.run(INTERFACE, 80))
+    server=Process(target=backend.run, args=(INTERFACE, 80))
     server.start()
     server.terminate()
     server.join()
