@@ -1,0 +1,34 @@
+"""
+Base tests for pytest integration
+Author: Chris Vantine
+"""
+from multiprocessing import Process
+import oceanview.front as front
+import oceanview.back as back
+import oceanview.data as data
+import oceanview.database.utilities as dbutil
+
+# Interface to listen on (localhost for testing)
+INTERFACE = "127.0.0.1"
+
+
+def test_dbsetup():
+    database = data.Database("db.sqlite", "database/build_db.sql")
+    dbutil.add_test_data(database)
+
+
+def test_front_init():
+    frontend = front.init()
+    server = Process(target=frontend.run(INTERFACE, 8000))
+    server.start()
+    server.terminate()
+    server.join()
+
+
+def test_back_init():
+    backend = back.init()
+    server=Process(target=backend.run(INTERFACE, 80))
+    server.start()
+    server.terminate()
+    server.join()
+
