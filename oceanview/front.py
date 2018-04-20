@@ -1,11 +1,12 @@
 """
-show what's in OCEANVIEW's database.
-author: Ethan Witherington.
+Show what's in OCEANVIEW's database.
+Author: Ethan Witherington.
 """
 
 import html
 from flask import Flask, render_template, request, abort, jsonify
 import data as databaseobj
+
 
 # route functions flagged as unused, disabling warning for this function.
 # pylint: disable=W0612

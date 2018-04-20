@@ -1,4 +1,4 @@
-# OCEANVIEW
+# OCEANVIEW [![Build Status](https://travis-ci.com/Milkshak3s/OCEANVIEW.svg?token=Tt3EuJVvxh3fYVx2TJis&branch=master)](https://travis-ci.com/Milkshak3s/OCEANVIEW)
 Blue team tracking for the red team
 <br />
 ## Usage
@@ -7,7 +7,7 @@ Blue team tracking for the red team
 apt-get update
 apt-get install python3
 apt-get install python3-pip
-pip3 install flask
+pip3 install -r requirements.txt
 ```
 <br />
 
