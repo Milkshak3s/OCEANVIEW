@@ -165,6 +165,7 @@ var addTag = function(text, target){
     tagx.appendChild(document.createTextNode("x"));
     tagx.onclick = function(){
         rmtag(this);
+        return false;
     };
     newtag.appendChild(tagx);
 
