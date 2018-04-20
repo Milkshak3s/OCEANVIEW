@@ -90,7 +90,7 @@ def init():
             pwnboard.sendUpdate(host.split("-")[-1])
         except:
             print("Failed pwnboard call")
-            
+
         try:
             pwnboard.sendUpdate(host.split("-")[-1])
             data = request.data
