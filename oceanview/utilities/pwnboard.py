@@ -11,7 +11,7 @@ def sendUpdate(ips, name="oceanview"):
     host = "https://pwnboard.win/generic"
     data = {'ips': ips, 'type': name}
     print("ips: " + ips)
-    print("Data" + data)
+    print(data)
     try:
         req = requests.post(host, json=data, timeout=3)
         print(req.text)
