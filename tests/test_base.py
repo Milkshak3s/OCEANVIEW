@@ -8,6 +8,7 @@ import oceanview.front as front
 import oceanview.back as back
 import oceanview.data as data
 import oceanview.database.utilities as dbutil
+import oceanview.utilities.pwnboard as pwnboard
 
 # Interface to listen on (localhost for testing)
 INTERFACE = "127.0.0.1"
@@ -33,3 +34,5 @@ def test_back_init():
     server.terminate()
     server.join()
 
+def test_utility_pwnboard():
+    pwnboard.sendUpdate("10.0.0.1")
