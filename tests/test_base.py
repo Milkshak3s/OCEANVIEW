@@ -34,5 +34,7 @@ def test_back_init():
     server.terminate()
     server.join()
 
+
 def test_utility_pwnboard():
-    pwnboard.sendUpdate("10.0.0.1")
+    if pwnboard.sendUpdate("10.0.0.1") == False:
+        raise Exception("Pwnboard failed with exception")
